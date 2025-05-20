@@ -65,7 +65,7 @@ Pierwszy zarejestrowany użytkownik zostaje automatycznie administratorem. Admin
 
 ```bash
 GET /api/books?token=XYZ
-
+```
 **Przykładowe zapytanie POST do dodania książki:**
 POST /api/books?token=XYZ
 Content-Type: application/json
