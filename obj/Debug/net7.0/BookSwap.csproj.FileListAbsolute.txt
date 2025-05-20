@@ -63,3 +63,7 @@ C:\Users\pryce\Desktop\BookSwap\obj\Debug\net7.0\refint\BookSwap.dll
 C:\Users\pryce\Desktop\BookSwap\obj\Debug\net7.0\BookSwap.pdb
 C:\Users\pryce\Desktop\BookSwap\obj\Debug\net7.0\BookSwap.genruntimeconfig.cache
 C:\Users\pryce\Desktop\BookSwap\obj\Debug\net7.0\ref\BookSwap.dll
+C:\Users\pryce\Desktop\BookSwap\bin\Debug\net7.0\Humanizer.dll
+C:\Users\pryce\Desktop\BookSwap\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Design.dll
+C:\Users\pryce\Desktop\BookSwap\bin\Debug\net7.0\Mono.TextTemplating.dll
+C:\Users\pryce\Desktop\BookSwap\bin\Debug\net7.0\System.CodeDom.dll
