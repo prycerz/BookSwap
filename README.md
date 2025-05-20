@@ -78,6 +78,8 @@ Content-Type: application/json
 }
 
 ## 🧱Struktura projektu
+
+```plaintext
 BookSwap/
 │
 ├── Controllers/
@@ -101,11 +103,11 @@ BookSwap/
 ├── Program.cs
 ├── Startup.cs (lub Program.cs w nowszych wersjach)
 └── appsettings.json
-
+```
 ## 👨‍💻 Autorzy
 Paweł Rycerz i Igor Wadas
 
-##📎 Uwagi końcowe
+## 📎 Uwagi końcowe
 Projekt spełnia wszystkie wymagania laboratoryjne:
 
 ✔️ 4+ tabele
