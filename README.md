@@ -110,11 +110,12 @@ Paweł Rycerz i Igor Wadas
 ## 📎 Uwagi końcowe
 Projekt spełnia wszystkie wymagania laboratoryjne:
 
-✔️ 4+ tabele
-✔️ Rejestracja + logowanie
-✔️ Role (admin, user)
-✔️ REST API + token
-✔️ Sesje
-✔️ CRUD + ciekawe zestawienia
-✔️ Webowy interfejs użytkownika
-✔️ README + struktura + opis
+- ✔️ 4+ tabele  
+- ✔️ Rejestracja + logowanie  
+- ✔️ Role (admin, user)  
+- ✔️ REST API + token  
+- ✔️ Sesje  
+- ✔️ CRUD + ciekawe zestawienia  
+- ✔️ Webowy interfejs użytkownika  
+- ✔️ README + struktura + opis  
+
