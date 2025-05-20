@@ -24,7 +24,7 @@ public class AccountController : Controller
         if (user != null && BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
         {
             HttpContext.Session.SetString("username", username);
-            return RedirectToAction("Welcome");
+            return RedirectToAction("Index", "Home");
         }
         ViewBag.Error = "Invalid credentials";
         return View();
