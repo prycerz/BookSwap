@@ -4,7 +4,7 @@ using BookSwap.Models; // jeśli AppDbContext jest w Models
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddHttpContextAccessor();
 // Sesja
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
