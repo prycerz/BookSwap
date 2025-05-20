@@ -1,0 +1,22 @@
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@{
+    var username = HttpContextAccessor.HttpContext.Session.GetString("username");
+}
+
+@if (string.IsNullOrEmpty(username))
+{
+    <h2>Witamy na stronie!</h2>
+    <p>Nie jesteś zalogowany.</p>
+    <a asp-controller="Account" asp-action="Login"><button>Zaloguj się</button></a>
+    <a asp-controller="Account" asp-action="Register"><button>Zarejestruj się</button></a>
+}
+else
+{
+    <h2>Welcome, @username!</h2>
+    <form method="post" asp-action="Logout">
+        <button type="submit">Wyloguj</button>
+    </form>
+}
+
+
