@@ -1,0 +1,29 @@
+@model List<BookSwap.Models.Book>
+
+<h2>Your Books</h2>
+
+@if (!Model.Any())
+{
+    <p>You have no books yet.</p>
+    <a class="btn btn-primary" asp-controller="Books" asp-action="Add">Add Your First Book</a>
+}
+else
+{
+    <a class="btn btn-success mb-3" asp-controller="Books" asp-action="Add">Add Book</a>
+    <div class="row">
+        @foreach (var book in Model)
+        {
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <img src="@book.ImageUrl" class="card-img-top" alt="Book cover" />
+                    <div class="card-body">
+                        <h5 class="card-title">@book.Title</h5>
+                        <p class="card-text">@book.Description</p>
+                        <a class="btn btn-info" asp-controller="Books" asp-action="Details" asp-route-id="@book.Id">View</a>
+                        @Html.Partial("Delete", book)
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
