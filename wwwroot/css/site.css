@@ -20,3 +20,9 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.book-cover {
+    height: 300px;
+    width: 100%;
+    object-fit: cover;
+}
