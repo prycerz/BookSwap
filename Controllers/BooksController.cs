@@ -37,6 +37,7 @@ public class BooksController : Controller
 
         var user = await _db.Users.FirstOrDefaultAsync(u => u.Username == username);
         book.UserId = user.Id;
+        book.DateAdded = DateTime.UtcNow;
 
         _db.Books.Add(book);
         await _db.SaveChangesAsync();

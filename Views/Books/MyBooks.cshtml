@@ -14,15 +14,18 @@ else
         @foreach (var book in Model)
         {
             <div class="col-md-4 mb-3">
-                <div class="card">
-                    <img src="@book.ImageUrl" class="card-img-top book-cover" alt="Book cover" />
+            <div class="card"></div>
                     <div class="card-body">
                         <h5 class="card-title">@book.Title</h5>
+                        <small class="text-muted">Added on: @book.DateAdded.ToString("yyyy-MM-dd HH:mm:ss") UTC</small>
+                    </div>
+                    <img src="@book.ImageUrl" class="card-img-top book-cover" alt="Book cover" />
+                    <div class="card-body">
                         <p class="card-text">@book.Description</p>
                         <a class="btn btn-info" asp-controller="Books" asp-action="Details" asp-route-id="@book.Id">View</a>
                         @Html.Partial("Delete", book)
                     </div>
-                </div>
+                
             </div>
         }
     </div>

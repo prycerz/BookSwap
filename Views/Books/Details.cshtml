@@ -1,9 +1,16 @@
 @model BookSwap.Models.Book
 
 <h2>@Model.Title</h2>
-<p>@Model.Description</p>
+<small class="text-muted">Added on: @Model.DateAdded.ToString("yyyy-MM-dd HH:mm:ss") UTC</small>
+
+<hr />
+
 @if (!string.IsNullOrEmpty(Model.ImageUrl))
 {
-    <img src="@Model.ImageUrl" alt="@Model.Title" style="max-width: 300px;" />
+    <img src="@Model.ImageUrl" alt="@Model.Title" style="max-width: 300px;" class="mb-3" />
 }
+
+<p>@Model.Description</p>
+
 <a asp-action="MyBooks" class="btn btn-secondary">Back</a>
+
