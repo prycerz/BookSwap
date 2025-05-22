@@ -120,17 +120,17 @@ Projekt spełnia wszystkie wymagania laboratoryjne:
 - ✔️ README + struktura + opis
 
 ## Najprościej i najskuteczniej:
--Ranking użytkowników (1)
--Statystyki książek (2)
--Historia wymian (3)
--Wyszukiwarka z filtrami (4)
+- Ranking użytkowników (1)
+- Statystyki książek (2)
+- Historia wymian (3)
+- Wyszukiwarka z filtrami (4)
 
 ## Panel administracyjny – co powinien zawierać?
--Listę użytkowników (z możliwością blokady, usuwania, zmiany roli)
--Listę książek (np. podejrzanych, zgłoszonych)
--Statystyki wymian / wyswietlen książki
--Historia wymian
--Ranking użytkowników
--Zgłoszenia użytkowników
--Zarządzanie kategoriami książek itp.
+- Listę użytkowników (z możliwością blokady, usuwania, zmiany roli)
+- Listę książek (np. podejrzanych, zgłoszonych)
+- Statystyki wymian / wyswietlen książki
+- Historia wymian
+- Ranking użytkowników
+- Zgłoszenia użytkowników
+- Zarządzanie kategoriami książek itp.
 
