@@ -26,3 +26,18 @@ body {
     width: 100%;
     object-fit: cover;
 }
+
+.card {
+    max-width: 300px; /* Stała szerokość karty */
+    margin: 0 auto;
+}
+
+.card-body .book-description {
+    max-width: 240px; 
+    margin: 0 auto; 
+    overflow-wrap: break-word; 
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}

@@ -28,23 +28,25 @@ public class BooksController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Add(Book book)
+public async Task<IActionResult> Add(Book book)
+{
+    var username = HttpContext.Session.GetString("username");
+    if (username == null) return RedirectToAction("Login", "Account");
 
-
+    if (!ModelState.IsValid)
     {
-        var username = HttpContext.Session.GetString("username");
-        if (username == null) return RedirectToAction("Login", "Account");
-
-        var user = await _db.Users.FirstOrDefaultAsync(u => u.Username == username);
-        book.UserId = user.Id;
-        book.DateAdded = DateTime.UtcNow;
-
-        _db.Books.Add(book);
-        await _db.SaveChangesAsync();
-        return RedirectToAction("MyBooks");
+        // Jeśli dane są nieprawidłowe, zwróć widok z błędami, zachowując dane
+        return View(book);
     }
 
+    var user = await _db.Users.FirstOrDefaultAsync(u => u.Username == username);
+    book.UserId = user.Id;
+    book.DateAdded = DateTime.UtcNow;
 
+    _db.Books.Add(book);
+    await _db.SaveChangesAsync();
+    return RedirectToAction("MyBooks");
+}
     public async Task<IActionResult> Details(int id)
     {
         var book = await _db.Books.Include(b => b.User).FirstOrDefaultAsync(b => b.Id == id);
