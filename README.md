@@ -110,12 +110,27 @@ Paweł Rycerz i Igor Wadas
 ## 📎 Uwagi końcowe
 Projekt spełnia wszystkie wymagania laboratoryjne:
 
-- ✔️ 4+ tabele  
+- ✔️ 4 tabele (książki, SwapExchange, Kategorie, Recenzje) 
 - ✔️ Rejestracja + logowanie  
 - ✔️ Role (admin, user)  
 - ✔️ REST API + token  
 - ✔️ Sesje  
 - ✔️ CRUD + ciekawe zestawienia  
 - ✔️ Webowy interfejs użytkownika  
-- ✔️ README + struktura + opis  
+- ✔️ README + struktura + opis
+
+## Najprościej i najskuteczniej:
+-Ranking użytkowników (1)
+-Statystyki książek (2)
+-Historia wymian (3)
+-Wyszukiwarka z filtrami (4)
+
+## Panel administracyjny – co powinien zawierać?
+-Listę użytkowników (z możliwością blokady, usuwania, zmiany roli)
+-Listę książek (np. podejrzanych, zgłoszonych)
+-Statystyki wymian / wyswietlen książki
+-Historia wymian
+-Ranking użytkowników
+-Zgłoszenia użytkowników
+-Zarządzanie kategoriami książek itp.
 
