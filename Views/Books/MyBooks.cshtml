@@ -22,6 +22,7 @@ else
                         <p class="card-text book-description">@book.Description</p>
                         <a class="btn btn-info" asp-controller="Books" asp-action="Details" asp-route-id="@book.Id">View</a>
                         @Html.Partial("Delete", book)
+                        <a class="btn btn-primary" asp-controller="Books" asp-action="Edit" asp-route-id="@book.Id">Edytuj</a>
                     </div>
                 </div>
             </div>
