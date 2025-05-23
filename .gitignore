@@ -14,6 +14,7 @@ secrets.json
 # Database files
 *.db
 *.db-shm
+*.db-wal
 
 # Logs
 *.log
