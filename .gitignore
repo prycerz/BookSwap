@@ -1,1 +1,33 @@
-bookswap.db
+# Build directories
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# ASP.NET Core secrets
+secrets.json
+
+# Database files
+*.db
+*.db-shm
+*.db-wal
+
+# Logs
+*.log
+
+# VS Code
+.vscode/
+
+# Rider / JetBrains
+.idea/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Database itself
+*bookswap.db
