@@ -18,6 +18,10 @@
 {
     <img src="@Model.ImageUrl" alt="@Model.Title" style="max-width: 300px;" class="mb-3" />
 }
+@if (!string.IsNullOrEmpty(Model.SecondImageUrl))
+{
+    <img src="@Model.SecondImageUrl" alt="@Model.Title" style="max-width: 300px;" class="mb-3" />
+}
 
 <p>@Model.Description</p>
 

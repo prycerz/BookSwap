@@ -19,6 +19,7 @@ namespace BookSwap.Migrations
                     Title = table.Column<string>(type: "TEXT", nullable: false),
                     Description = table.Column<string>(type: "TEXT", nullable: false),
                     ImageUrl = table.Column<string>(type: "TEXT", nullable: false),
+                    SecondImageUrl = table.Column<string>(type: "TEXT", nullable: false),
                     UserId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>

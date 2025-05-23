@@ -1,6 +1,6 @@
 @model BookSwap.Models.Book
 
-<h2>Add Book</h2>
+<h2>Dodaj Książkę</h2>
 
 @if (ViewData.ModelState.ErrorCount > 0)
 {
@@ -17,13 +17,13 @@
 
 <form asp-action="Add" method="post">
     <div class="form-group">
-        <label asp-for="Title">Title</label>
+        <label asp-for="Title">Tytuł</label>
         <input asp-for="Title" class="form-control" maxlength="10" id="titleInput" oninput="updateTitleCounter()" />
         <span asp-validation-for="Title" class="text-danger"></span>
         <small id="titleCounter" class="form-text text-muted">Pozostało znaków: 10</small>
     </div>
     <div class="form-group">
-        <label asp-for="Description">Description</label>
+        <label asp-for="Description">Opis</label>
         <textarea asp-for="Description" class="form-control" maxlength="100" id="descriptionInput" oninput="updateDescriptionCounter()"></textarea>
         <span asp-validation-for="Description" class="text-danger"></span>
         <small id="descriptionCounter" class="form-text text-muted">Pozostało znaków: 100</small>
@@ -33,7 +33,12 @@
         <input asp-for="ImageUrl" class="form-control" />
         <span asp-validation-for="ImageUrl" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-success">Add</button>
+    <div class="form-group">
+        <label asp-for="SecondImageUrl">Second Image URL</label>
+        <input asp-for="SecondImageUrl" class="form-control" />
+        <span asp-validation-for="SecondImageUrl" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-success">Dodaj</button>
 </form>
 
 @section Scripts {

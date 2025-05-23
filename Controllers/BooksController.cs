@@ -81,6 +81,7 @@ public class BooksController : Controller
             bookToUpdate.Title = book.Title;
             bookToUpdate.Description = book.Description;
             bookToUpdate.ImageUrl = book.ImageUrl;
+            bookToUpdate.SecondImageUrl = book.SecondImageUrl;
             // Update any other fields you need
             await _db.SaveChangesAsync();
             return RedirectToAction("MyBooks");

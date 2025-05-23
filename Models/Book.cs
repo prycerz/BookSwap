@@ -17,6 +17,7 @@ namespace BookSwap.Models
         public string Description { get; set; }
 
         public string ImageUrl { get; set; }
+        public string SecondImageUrl { get; set; }
         public int UserId { get; set; }
 
         public DateTime DateAdded { get; set; }
