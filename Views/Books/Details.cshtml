@@ -19,23 +19,23 @@
     <img src="@Model.ImageUrl" alt="@Model.Title" style="max-width: 300px;" class="mb-3" />
 }
 
-<div class="d-flex gap-10"></div>
-@if (!string.IsNullOrEmpty(Model.SecondImageUrl))
-{
-    <img src="@Model.SecondImageUrl" alt="@Model.Title" style="max-width: 100px;" class="mb-3" />
-}
-@if (!string.IsNullOrEmpty(Model.ThirdImageUrl))
-{
-    <img src="@Model.ThirdImageUrl" alt="@Model.Title" style="max-width: 100px;" class="mb-3" />
-}
-@if (!string.IsNullOrEmpty(Model.FourthImageUrl))
-{
-    <img src="@Model.FourthImageUrl" alt="@Model.Title" style="max-width: 100px;" class="mb-3" />
-}
+<div class="d-flex gap-2 flex-wrap mb-3">
+    @if (!string.IsNullOrEmpty(Model.SecondImageUrl))
+    {
+        <img src="@Model.SecondImageUrl" alt="@Model.Title" style="max-width: 100px;" class="me-2 mb-2" />
+    }
+    @if (!string.IsNullOrEmpty(Model.ThirdImageUrl))
+    {
+        <img src="@Model.ThirdImageUrl" alt="@Model.Title" style="max-width: 100px;" class="me-2 mb-2" />
+    }
+    @if (!string.IsNullOrEmpty(Model.FourthImageUrl))
+    {
+        <img src="@Model.FourthImageUrl" alt="@Model.Title" style="max-width: 100px;" class="me-2 mb-2" />
+    }
 </div>
 
-
-<p style="text-align: center">@Model.Description</p>
+<p>@Model.Description</p>
 
 <a asp-action="MyBooks" class="btn btn-secondary">Back</a>
+
 
