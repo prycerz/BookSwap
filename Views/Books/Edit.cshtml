@@ -1,0 +1,70 @@
+@model BookSwap.Models.Book
+
+<h2>Edytuj książkę</h2>
+
+@if (ViewData.ModelState.ErrorCount > 0)
+{
+    <div class="alert alert-danger">
+        Popraw dane
+        <ul>
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <li>@error.ErrorMessage</li>
+            }
+        </ul>
+    </div>
+}
+
+<form asp-action="Edit" method="post">
+    <div class="form-group">
+        <label asp-for="Title">Tytuł</label>
+        <input asp-for="Title" class="form-control" maxlength="10" id="titleInput" oninput="updateTitleCounter()" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+        <small id="titleCounter" class="form-text text-muted">Pozostało znaków: 10</small>
+    </div>
+    <div class="form-group">
+        <label asp-for="Description">Opis</label>
+        <textarea asp-for="Description" class="form-control" maxlength="100" id="descriptionInput" oninput="updateDescriptionCounter()"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+        <small id="descriptionCounter" class="form-text text-muted">Pozostało znaków: 100</small>
+    </div>
+    <div class="form-group">
+        <label asp-for="ImageUrl">Adres URL obrazka</label>
+        <input asp-for="ImageUrl" class="form-control" />
+        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-success">Zapisz zmiany</button>
+</form>
+
+@section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        function updateTitleCounter() {
+            console.log("updateTitleCounter wywołane"); // Debugowanie
+            const titleInput = document.getElementById('titleInput');
+            const titleCounter = document.getElementById('titleCounter');
+            const remaining = 10 - (titleInput.value.length || 0);
+            titleCounter.textContent = `Pozostało znaków: ${remaining}`;
+            titleCounter.style.color = remaining < 0 ? 'red' : 'inherit';
+        }
+
+        function updateDescriptionCounter() {
+            console.log("updateDescriptionCounter wywołane"); // Debugowanie
+            const descriptionInput = document.getElementById('descriptionInput');
+            const descriptionCounter = document.getElementById('descriptionCounter');
+            const remaining = 100 - (descriptionInput.value.length || 0);
+            descriptionCounter.textContent = `Pozostało znaków: ${remaining}`;
+            descriptionCounter.style.color = remaining < 0 ? 'red' : 'inherit';
+        }
+
+        // Uruchom liczniki przy załadowaniu strony
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log("DOMContentLoaded uruchomione"); // Debugowanie
+            updateTitleCounter();
+            updateDescriptionCounter();
+        });
+    </script>
+}

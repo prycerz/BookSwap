@@ -1,7 +1,16 @@
 @model BookSwap.Models.Book
 
 <h2>@Model.Title</h2>
-<small class="text-muted">Added on: @Model.DateAdded.ToString("yyyy-MM-dd HH:mm:ss") UTC</small>
+<small class="text-muted">
+    Added on: <span id="date-added">@Model.DateAdded.ToString("yyyy-MM-ddTHH:mm:ssZ")</span>
+    <script>
+        const el = document.getElementById('date-added');
+        if (el) {
+            const date = new Date(el.textContent);
+            el.textContent = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+        }
+    </script>
+</small>
 
 <hr />
 
