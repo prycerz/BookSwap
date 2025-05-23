@@ -13,6 +13,7 @@ secrets.json
 
 # Database files
 *.db
+*.db-shm
 
 # Logs
 *.log
