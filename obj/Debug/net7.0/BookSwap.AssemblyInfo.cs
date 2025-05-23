@@ -13,11 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BookSwap")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-<<<<<<< HEAD
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+aa72ff95c07a7a4ce9f7dfd5c07e4ebe7b476170")]
-=======
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
->>>>>>> 26ca9836b59112f4d9d7efa17ead8fb3158f20b4
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f7400ab17b3bb19fdb288d7d54f1825e017fc94e")]
 [assembly: System.Reflection.AssemblyProductAttribute("BookSwap")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BookSwap")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

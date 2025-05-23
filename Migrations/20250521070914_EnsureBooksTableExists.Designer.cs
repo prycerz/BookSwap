@@ -35,6 +35,14 @@ namespace BookSwap.Migrations
                     b.Property<string>("SecondImageUrl")
                         .IsRequired()
                         .HasColumnType("TEXT");
+            
+                    b.Property<string>("ThirdImageUrl")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+            
+                    b.Property<string>("FourthImageUrl")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Title")
                         .IsRequired()

@@ -34,9 +34,19 @@
         <span asp-validation-for="ImageUrl" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="SecondImageUrl">Adres URL obrazka</label>
+        <label asp-for="SecondImageUrl">Adres URL obrazka (opcjonalne)</label>
         <input asp-for="SecondImageUrl" class="form-control" />
         <span asp-validation-for="SecondImageUrl" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ThirdImageUrl">Adres URL obrazka (opcjonalne)</label>
+        <input asp-for="ThirdImageUrl" class="form-control" />
+        <span asp-validation-for="ThirdImageUrl" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="FourthImageUrl">Adres URL obrazka (opcjonalne)</label>
+        <input asp-for="FourthImageUrl" class="form-control" />
+        <span asp-validation-for="FourthImageUrl" class="text-danger"></span>
     </div>
     <button type="submit" class="btn btn-success">Zapisz zmiany</button>
 </form>

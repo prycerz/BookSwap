@@ -29,14 +29,24 @@
         <small id="descriptionCounter" class="form-text text-muted">Pozostało znaków: 100</small>
     </div>
     <div class="form-group">
-        <label asp-for="ImageUrl">Image URL</label>
+        <label asp-for="ImageUrl">Adres URL głównego obrazka</label>
         <input asp-for="ImageUrl" class="form-control" />
         <span asp-validation-for="ImageUrl" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="SecondImageUrl">Second Image URL</label>
+        <label asp-for="SecondImageUrl">Adres URL drugiego obrazka (opcjonalne)</label>
         <input asp-for="SecondImageUrl" class="form-control" />
         <span asp-validation-for="SecondImageUrl" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ThirdImageUrl">Adres URL obrazka (opcjonalne)</label>
+        <input asp-for="ThirdImageUrl" class="form-control" />
+        <span asp-validation-for="ThirdImageUrl" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="FourthImageUrl">Adres URL obrazka (opcjonalne)</label>
+        <input asp-for="FourthImageUrl" class="form-control" />
+        <span asp-validation-for="FourthImageUrl" class="text-danger"></span>
     </div>
     <button type="submit" class="btn btn-success">Dodaj</button>
 </form>
