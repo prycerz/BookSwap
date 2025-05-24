@@ -95,12 +95,15 @@ public class BooksController : Controller
         }
 
     }
-    public async Task<IActionResult> Details(int id)
-    {
-        var book = await _db.Books.Include(b => b.User).FirstOrDefaultAsync(b => b.Id == id);
-        if (book == null) return NotFound();
-        return View(book);
-    }
+public async Task<IActionResult> Details(int id)
+{
+    var book = await _db.Books.Include(b => b.User).FirstOrDefaultAsync(b => b.Id == id);
+    if (book == null) return NotFound();
+
+    ViewBag.BackUrl = Request.Headers["Referer"].ToString() ?? Url.Action("MyBooks", "Books");
+    return View(book);
+}
+
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Delete(int id)
