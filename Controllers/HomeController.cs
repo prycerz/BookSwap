@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using BookSwap.Models;
-//using BookSwap.Data; // dodaj jeśli jeszcze nie ma
 using Microsoft.EntityFrameworkCore;
 
 namespace BookSwap.Controllers;
@@ -25,12 +24,27 @@ public class HomeController : Controller
         }
 
         var books = await _context.Books
+            .Include(b => b.User)
             .OrderByDescending(b => b.DateAdded)
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
             .ToListAsync();
 
-        return View(books);
+        var usernames = books.Select(b => b.User.Username).Distinct().ToList();
+
+        var profiles = await _context.UserProfiles
+            .Where(p => usernames.Contains(p.Username))
+            .ToListAsync();
+
+        var profileDict = profiles.ToDictionary(p => p.Username);
+
+        var bookViewModels = books.Select(book => new BookWithProfileViewModel
+        {
+            Book = book,
+            Profile = profileDict.TryGetValue(book.User.Username, out var profile) ? profile : null
+        }).ToList();
+
+        return View(bookViewModels);
     }
 
     public IActionResult Privacy()
@@ -44,4 +58,5 @@ public class HomeController : Controller
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }
+
 

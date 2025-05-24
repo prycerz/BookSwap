@@ -249,14 +249,6 @@
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
-      "Id": "C:\\Users\\pryce\\Desktop\\BookSwap\\wwwroot\\uploads\\23640044-9276-4f66-a777-1c153d2d5e15.png",
-      "PackagePath": "staticwebassets\\uploads\\23640044-9276-4f66-a777-1c153d2d5e15.png"
-    },
-    {
-      "Id": "C:\\Users\\pryce\\Desktop\\BookSwap\\wwwroot\\uploads\\aecfa90e-97e3-4d81-bfe7-82019db715c5.png",
-      "PackagePath": "staticwebassets\\uploads\\aecfa90e-97e3-4d81-bfe7-82019db715c5.png"
-    },
-    {
       "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.BookSwap.Microsoft.AspNetCore.StaticWebAssets.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
     },

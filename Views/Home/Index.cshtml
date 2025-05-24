@@ -1,4 +1,4 @@
-﻿@model List<BookSwap.Models.Book>
+﻿@model List<BookSwap.Models.BookWithProfileViewModel>
 
 @{
     ViewData["Title"] = "Home Page";
@@ -7,16 +7,29 @@
 <h1 class="text-center display-4 mb-4">Welcome</h1>
 
 <div id="books-container" class="row">
-    @foreach (var book in Model)
+    @foreach (var item in Model)
     {
+        var book = item.Book;
+        var profile = item.Profile;
         <div class="col-md-4 mb-3">
             <div class="card">
                 <img src="@book.ImageUrl" class="card-img-top book-cover" alt="Book cover" />
                 <div class="card-body">
                     <h5 class="card-title">@book.Title</h5>
-                    <small class="text-muted">Added on: @book.DateAdded.ToString("yyyy-MM-dd HH:mm:ss") UTC</small>
                     <p class="card-text">@book.Description</p>
-                    <a class="btn btn-info" asp-controller="Books" asp-action="Details" asp-route-id="@book.Id">View</a>
+                    <small class="text-muted">Added on: @book.DateAdded.ToString("yyyy-MM-dd HH:mm:ss") UTC</small>
+                    <div class="d-flex align-items-center mt-2">
+                        @if (profile != null)
+                        {
+                            <img src="@profile.ImagePath" alt="Profile" class="rounded-circle me-2" width="40" height="40" />
+                            <span>@profile.Username</span>
+                        }
+                        else
+                        {
+                            <span class="text-muted">Unknown user</span>
+                        }
+                    </div>
+                    <a class="btn btn-info mt-2" asp-controller="Books" asp-action="Details" asp-route-id="@book.Id">View</a>
                 </div>
             </div>
         </div>
