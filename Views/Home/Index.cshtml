@@ -1,8 +1,48 @@
-﻿@{
+﻿@model List<BookSwap.Models.Book>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<h1 class="text-center display-4 mb-4">Welcome</h1>
+
+<div id="books-container" class="row">
+    @foreach (var book in Model)
+    {
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <img src="@book.ImageUrl" class="card-img-top book-cover" alt="Book cover" />
+                <div class="card-body">
+                    <h5 class="card-title">@book.Title</h5>
+                    <small class="text-muted">Added on: @book.DateAdded.ToString("yyyy-MM-dd HH:mm:ss") UTC</small>
+                    <p class="card-text">@book.Description</p>
+                    <a class="btn btn-info" asp-controller="Books" asp-action="Details" asp-route-id="@book.Id">View</a>
+                </div>
+            </div>
+        </div>
+    }
 </div>
+
+<div class="text-center mt-4">
+    <button id="load-more" class="btn btn-primary">Load More</button>
+</div>
+
+@section Scripts {
+    <script>
+        let page = 2;
+        const loadMoreBtn = document.getElementById('load-more');
+
+        loadMoreBtn.addEventListener('click', function () {
+            fetch(`/Home/Index?page=${page}`)
+                .then(response => response.text())
+                .then(html => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const newBooks = doc.querySelectorAll('#books-container > .col-md-4');
+                    const container = document.getElementById('books-container');
+                    newBooks.forEach(book => container.appendChild(book));
+                    page++;
+                });
+        });
+    </script>
+}
