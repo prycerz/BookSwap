@@ -18,5 +18,9 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<User>().HasData(
             new User { Id = 1, Username = "admin", PasswordHash = adminPassword, Role = "Admin" }
         );
+        // add profile for admin
+        modelBuilder.Entity<UserProfile>().HasData(
+            new UserProfile { Id = 1,  Username = "admin" }
+        );
     }
 }

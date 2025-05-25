@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookSwap.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250525111740_AddMessagesTable")]
-    partial class AddMessagesTable
+    [Migration("20250525230158_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -105,6 +105,13 @@ namespace BookSwap.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("UserProfiles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Username = "admin"
+                        });
                 });
 
             modelBuilder.Entity("User", b =>
@@ -137,9 +144,9 @@ namespace BookSwap.Migrations
                         new
                         {
                             Id = 1,
-                            PasswordHash = "$2a$11$/FtAzT1g8p3ZRrHW16sGb.SSKB2cnu1dkpjXv1VG2aGwsPrUoU2fG",
+                            PasswordHash = "$2a$11$iufXijExmP0IomkY8ka14O3eOUW5nGo.8es3dMPy2iQZ7.wglbTzi",
                             Role = "Admin",
-                            Token = "fd95068d-df8d-4247-9d31-910c55a98c69",
+                            Token = "f07200eb-1a16-401d-9d67-0360932e3aab",
                             Username = "admin"
                         });
                 });

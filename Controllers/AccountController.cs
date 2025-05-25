@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
+using BookSwap.Models;
 public class AccountController : Controller
 {
     private readonly AppDbContext _db;
@@ -55,7 +55,16 @@ public class AccountController : Controller
             Username = username,
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(password),
         };
+
         _db.Users.Add(user);
+
+        var profile = new UserProfile
+        {
+            Username = username,
+        };
+        _db.UserProfiles.Add(profile);
+
+
         await _db.SaveChangesAsync();
         return RedirectToAction("Login");
     }

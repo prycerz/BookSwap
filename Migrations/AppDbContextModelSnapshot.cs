@@ -102,6 +102,13 @@ namespace BookSwap.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("UserProfiles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Username = "admin"
+                        });
                 });
 
             modelBuilder.Entity("User", b =>
@@ -134,9 +141,9 @@ namespace BookSwap.Migrations
                         new
                         {
                             Id = 1,
-                            PasswordHash = "$2a$11$/S95Rp60ZvLuwlbJqHqsmecz4W3bcgFmy5nWdp9eihgDOmd8dpM/q",
+                            PasswordHash = "$2a$11$iufXijExmP0IomkY8ka14O3eOUW5nGo.8es3dMPy2iQZ7.wglbTzi",
                             Role = "Admin",
-                            Token = "cad78774-c820-4069-82d3-fd4db22efd23",
+                            Token = "f07200eb-1a16-401d-9d67-0360932e3aab",
                             Username = "admin"
                         });
                 });
