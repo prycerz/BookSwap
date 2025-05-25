@@ -25,6 +25,7 @@ namespace BookSwap.Controllers
             var currentUser = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
             if (currentUser == null)
             {
+                HttpContext.Session.Clear();
                 return RedirectToAction("Login", "Account");
             }
 
@@ -50,7 +51,7 @@ namespace BookSwap.Controllers
             return View(model);
         }
 
-        // POST: Messages/Create
+        // POST: Messages/Create (fallback dla formularza)
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(MessageViewModel model)
@@ -64,6 +65,7 @@ namespace BookSwap.Controllers
             var currentUser = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
             if (currentUser == null)
             {
+                HttpContext.Session.Clear();
                 return RedirectToAction("Login", "Account");
             }
 
@@ -94,5 +96,53 @@ namespace BookSwap.Controllers
 
             return View(model);
         }
+
+        // POST: Messages/SendMessage (dla AJAX)
+        [HttpPost]
+        public async Task<IActionResult> SendMessage([FromBody] SendMessageRequest request)
+        {
+            if (string.IsNullOrWhiteSpace(request.Content))
+                return BadRequest("Treść wiadomości nie może być pusta.");
+
+            var username = HttpContext.Session.GetString("username");
+            if (string.IsNullOrEmpty(username))
+                return Unauthorized();
+
+            var sender = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
+            if (sender == null)
+            {
+                HttpContext.Session.Clear();
+                return Unauthorized();
+            }
+
+            var receiver = await _context.Users.FindAsync(request.ReceiverId);
+            if (receiver == null)
+                return BadRequest("Odbiorca nie istnieje.");
+
+            var message = new Message
+            {
+                SenderId = sender.Id,
+                ReceiverId = request.ReceiverId,
+                Content = request.Content,
+                DateSent = DateTime.UtcNow
+            };
+
+            _context.Messages.Add(message);
+            await _context.SaveChangesAsync();
+
+            return Json(new
+            {
+                senderUsername = sender.Username,
+                message = message.Content,
+                date = message.DateSent.ToLocalTime().ToString("g")
+            });
+        }
+    }
+
+    // Model dla żądania AJAX
+    public class SendMessageRequest
+    {
+        public int ReceiverId { get; set; }
+        public string Content { get; set; } = "";
     }
 }

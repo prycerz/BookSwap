@@ -33,19 +33,66 @@
     }
 </div>
 
-<form asp-action="Create" method="post">
+<form id="message-form" asp-action="Create" method="post">
     <input type="hidden" asp-for="ReceiverId" />
     <div class="input-group">
-        <input asp-for="NewMessage" class="form-control" placeholder="Napisz wiadomość..." autocomplete="off" />
-        <button type="submit" class="btn btn-primary">Wyślij</button>
+        <input asp-for="NewMessage" id="message-input" class="form-control" placeholder="Napisz wiadomość..." autocomplete="off" />
+        <button type="button" id="send-btn" class="btn btn-primary">Wyślij</button>
     </div>
     <span asp-validation-for="NewMessage" class="text-danger"></span>
 </form>
 
 @section Scripts {
     <script>
-        // Automatycznie scrolluj na dół po załadowaniu wiadomości
-        var messagesBox = document.getElementById('messages-box');
+        // Automatycznie scrolluj na dół po załadowaniu
+        const messagesBox = document.getElementById('messages-box');
         messagesBox.scrollTop = messagesBox.scrollHeight;
+
+        // Obsługa wysyłania wiadomości przez AJAX
+        document.getElementById('send-btn').addEventListener('click', async function () {
+            const input = document.getElementById('message-input');
+            const content = input.value.trim();
+            const receiverId = @Model.ReceiverId;
+
+            if (content === '') {
+                alert('Wiadomość nie może być pusta.');
+                return;
+            }
+
+            try {
+                const response = await fetch('/Messages/SendMessage', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ receiverId, content })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+
+                    // Dodaj wiadomość do messages-box
+                    const msgDiv = document.createElement('div');
+                    msgDiv.style.marginBottom = '10px';
+                    msgDiv.style.textAlign = 'right';
+                    msgDiv.innerHTML = `
+                        <div style="display:inline-block; padding:8px 12px; border-radius:15px; background:#007bff; color:white; max-width:70%;">
+                            ${data.message}
+                            <div style="font-size:10px; margin-top:4px; opacity:0.7;">
+                                ${data.date}
+                            </div>
+                        </div>
+                    `;
+                    messagesBox.appendChild(msgDiv);
+                    messagesBox.scrollTop = messagesBox.scrollHeight;
+
+                    input.value = ''; // Wyczyść input
+                } else {
+                    alert('Nie udało się wysłać wiadomości.');
+                }
+            } catch (error) {
+                alert('Wystąpił błąd: ' + error.message);
+            }
+        });
     </script>
 }
