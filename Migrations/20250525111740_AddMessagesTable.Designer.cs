@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookSwap.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250525111740_AddMessagesTable")]
+    partial class AddMessagesTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.18");
@@ -134,9 +137,9 @@ namespace BookSwap.Migrations
                         new
                         {
                             Id = 1,
-                            PasswordHash = "$2a$11$/S95Rp60ZvLuwlbJqHqsmecz4W3bcgFmy5nWdp9eihgDOmd8dpM/q",
+                            PasswordHash = "$2a$11$/FtAzT1g8p3ZRrHW16sGb.SSKB2cnu1dkpjXv1VG2aGwsPrUoU2fG",
                             Role = "Admin",
-                            Token = "cad78774-c820-4069-82d3-fd4db22efd23",
+                            Token = "fd95068d-df8d-4247-9d31-910c55a98c69",
                             Username = "admin"
                         });
                 });

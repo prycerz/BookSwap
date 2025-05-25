@@ -21,14 +21,17 @@
                     <div class="d-flex align-items-center mt-2">
                         @if (profile != null)
                         {
+                            <a asp-controller="Users" asp-action="Profile" asp-route-id="@profile.Id" style="display:flex; align-items:center; text-decoration:none; color:inherit;">
                             <img src="~/uploads/@profile.ImagePath" alt="Profile" class="rounded-circle me-2" width="40" height="40" />
                             <span>@profile.Username</span>
+                        </a>
                         }
-                        else
-                        {
-                            <span class="text-muted">Unknown user</span>
+                    else
+                     {
+                    <span class="text-muted">Unknown user</span>
                         }
                     </div>
+
                     <a class="btn btn-info mt-2" asp-controller="Books" asp-action="Details" asp-route-id="@book.Id">View</a>
                 </div>
             </div>

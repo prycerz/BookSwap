@@ -1,0 +1,51 @@
+@model BookSwap.Models.MessageViewModel
+
+@{
+    ViewData["Title"] = "Messages";
+}
+
+<div class="d-flex align-items-center mb-3">
+    @if (!string.IsNullOrEmpty(Model.ReceiverImagePath))
+    {
+        <img src="~/uploads/@Model.ReceiverImagePath" alt="User image" style="width:50px; height:50px; object-fit: cover; border-radius:50%;" />
+    }
+    else
+    {
+        <div style="width:50px; height:50px; background:#ccc; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold;">
+            @Model.ReceiverUsername[0]
+        </div>
+    }
+    <h4 class="ms-2">@Model.ReceiverUsername</h4>
+</div>
+
+<div id="messages-box" style="height:400px; overflow-y:auto; border:1px solid #ccc; padding:10px; margin-bottom:15px;">
+    @foreach (var message in Model.Messages)
+    {
+        bool isSentByCurrentUser = message.SenderId == Model.CurrentUserId;
+        <div style="margin-bottom:10px; text-align:@(isSentByCurrentUser ? "right" : "left")">
+            <div style="display:inline-block; padding:8px 12px; border-radius:15px; background:@(isSentByCurrentUser ? "#007bff" : "#e5e5ea"); color:@(isSentByCurrentUser ? "white" : "black"); max-width:70%;">
+                @message.Content
+                <div style="font-size:10px; margin-top:4px; opacity:0.7;">
+                    @message.DateSent.ToLocalTime().ToString("g")
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<form asp-action="Create" method="post">
+    <input type="hidden" asp-for="ReceiverId" />
+    <div class="input-group">
+        <input asp-for="NewMessage" class="form-control" placeholder="Napisz wiadomość..." autocomplete="off" />
+        <button type="submit" class="btn btn-primary">Wyślij</button>
+    </div>
+    <span asp-validation-for="NewMessage" class="text-danger"></span>
+</form>
+
+@section Scripts {
+    <script>
+        // Automatycznie scrolluj na dół po załadowaniu wiadomości
+        var messagesBox = document.getElementById('messages-box');
+        messagesBox.scrollTop = messagesBox.scrollHeight;
+    </script>
+}
