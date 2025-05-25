@@ -12,52 +12,57 @@ public class ConversationsController : Controller
         _context = context;
     }
 
-    public async Task<IActionResult> Index()
+     public async Task<IActionResult> Index()
+{
+    var currentUserId = HttpContext.Session.GetInt32("userId");
+    if (currentUserId == null)
     {
-        var currentUserId = HttpContext.Session.GetInt32("userId");
-        if (currentUserId == null)
+        return RedirectToAction("Login", "Account");
+    }
+
+    // Pobierz wszystkie wiadomości, gdzie user jest nadawcą lub odbiorcą
+    var messages = await _context.Messages
+        .Where(m => m.SenderId == currentUserId || m.ReceiverId == currentUserId)
+        .OrderByDescending(m => m.DateSent)
+        .ToListAsync();
+
+    // Znajdź ID innych użytkowników z konwersacji
+    var otherUserIds = messages
+        .Select(m => m.SenderId == currentUserId ? m.ReceiverId : m.SenderId)
+        .Distinct()
+        .ToList();
+
+    // Pobierz profile UserProfiles po Id (tych innych użytkowników)
+    var userProfiles = await _context.UserProfiles
+        .Where(up => otherUserIds.Contains(up.Id))
+        .ToDictionaryAsync(up => up.Id);
+
+    // Grupujemy konwersacje po drugim użytkowniku (po Id)
+    var conversations = otherUserIds.Select(otherUserId =>
+    {
+        // ostatnia wiadomość między currentUser a otherUser
+        var lastMessage = messages
+            .Where(m => (m.SenderId == currentUserId && m.ReceiverId == otherUserId) ||
+                        (m.SenderId == otherUserId && m.ReceiverId == currentUserId))
+            .OrderByDescending(m => m.DateSent)
+            .FirstOrDefault();
+
+        userProfiles.TryGetValue(otherUserId, out var profile);
+
+        return new ConversationListItemViewModel
         {
-            return RedirectToAction("Login", "Account");
-        }
+            OtherUserId = otherUserId,
+            OtherUsername = profile?.Username ?? "Nieznany",
+            OtherUserProfileImage = profile?.ImagePath,
+            LastMessage = lastMessage?.Content ?? "",
+            LastMessageDate = lastMessage?.DateSent ?? DateTime.MinValue
+        };
+    })
+    .OrderByDescending(c => c.LastMessageDate)
+    .ToList();
 
-        // Pobierz wszystkie wiadomości, gdzie user jest nadawcą lub odbiorcą
-        var messages = await _context.Messages
-            .Where(m => m.SenderId == currentUserId || m.ReceiverId == currentUserId)
-            .Include(m => m.Sender)
-            .Include(m => m.Receiver)
-            .ToListAsync();
+    return View(conversations);
+}
 
-        // Pobierz wszystkie UserProfile (można ograniczyć do tych użytkowników, którzy są w wiadomościach)
-        var usernames = messages
-            .SelectMany(m => new[] { m.Sender.Username, m.Receiver.Username })
-            .Distinct()
-            .ToList();
-
-        var userProfiles = await _context.UserProfiles
-            .Where(up => usernames.Contains(up.Username))
-            .ToDictionaryAsync(up => up.Username);
-
-        // Grupujemy konwersacje - druga osoba w rozmowie to Sender lub Receiver
-        var conversations = messages
-            .GroupBy(m => m.SenderId == currentUserId ? m.Receiver : m.Sender)
-            .Select(g =>
-            {
-                var user = g.Key;
-                var profile = userProfiles.ContainsKey(user.Username) ? userProfiles[user.Username] : null;
-
-                return new ConversationListItemViewModel
-                {
-                    OtherUserId = user.Id,
-                    OtherUsername = user.Username,
-                    OtherUserProfileImage = profile?.ImagePath,  // pobieramy zdjęcie z profilu
-                    LastMessage = g.OrderByDescending(m => m.DateSent).First().Content,
-                    LastMessageDate = g.OrderByDescending(m => m.DateSent).First().DateSent
-                };
-            })
-            .OrderByDescending(c => c.LastMessageDate)
-            .ToList();
-
-        return View(conversations);
-    } 
 
 }
