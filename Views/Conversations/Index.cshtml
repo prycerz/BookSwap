@@ -1,0 +1,35 @@
+@model IEnumerable<BookSwap.Models.ConversationListItemViewModel>
+
+@{
+    ViewData["Title"] = "Moje Konwersacje";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (!Model.Any())
+{
+    <p>Nie masz żadnych konwersacji.</p>
+}
+else
+{
+    <ul class="list-group">
+    @foreach (var conv in Model)
+    {
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <a asp-controller="Messages" asp-action="Index" asp-route-receiverId="@conv.OtherUserId" class="d-flex align-items-center text-decoration-none">
+                <img src="@(string.IsNullOrEmpty(conv.OtherUserProfileImage) ? "/images/default-profile.png" : $"/uploads/{conv.OtherUserProfileImage}")" 
+                     alt="Profile Image" 
+                     style="width:40px; height:40px; border-radius:50%; margin-right:10px;" />
+                <div>
+                    <strong>@conv.OtherUsername</strong><br />
+                    <small class="text-muted">@conv.LastMessage</small>
+                </div>
+            </a>
+            <span class="badge bg-primary rounded-pill">
+                @conv.LastMessageDate.ToLocalTime().ToString("g")
+            </span>
+        </li>
+    }
+</ul>
+
+}
