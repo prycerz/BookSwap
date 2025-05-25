@@ -44,7 +44,7 @@
 
 @section Scripts {
     <script>
-        // Automatycznie scrolluj na dół po załadowaniu
+        // Automatycznie scrolluj na dół
         const messagesBox = document.getElementById('messages-box');
         messagesBox.scrollTop = messagesBox.scrollHeight;
 
@@ -63,7 +63,7 @@
                 const response = await fetch('/Messages/SendMessage', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json',
+                        'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({ receiverId, content })
                 });
@@ -86,12 +86,15 @@
                     messagesBox.appendChild(msgDiv);
                     messagesBox.scrollTop = messagesBox.scrollHeight;
 
-                    input.value = ''; // Wyczyść input
+                    input.value = '';
                 } else {
-                    alert('Nie udało się wysłać wiadomości.');
+                    const errorText = await response.text();
+                    console.log(`Błąd serwera: ${errorText}`);
+                    alert(`Nie udało się wysłać wiadomości: ${errorText}`);
                 }
             } catch (error) {
-                alert('Wystąpił błąd: ' + error.message);
+                console.error('Błąd AJAX:', error);
+                alert(`Wystąpił błąd: ${error.message}`);
             }
         });
     </script>

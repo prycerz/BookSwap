@@ -78,8 +78,32 @@ namespace BookSwap.Controllers
                     Content = model.NewMessage,
                     DateSent = DateTime.UtcNow
                 };
-                _context.Messages.Add(message);
-                await _context.SaveChangesAsync();
+
+                await using var transaction = await _context.Database.BeginTransactionAsync();
+                try
+                {
+                    _context.Messages.Add(message);
+                    var saved = await _context.SaveChangesAsync();
+                    Console.WriteLine($"Create: Zapisano {saved} rekordów dla wiadomości od {currentUser.Username} do ID {model.ReceiverId}");
+
+                    // Weryfikacja zapisu w bazie
+                    var messageExists = await _context.Messages.AnyAsync(m => m.Id == message.Id);
+                    Console.WriteLine($"Create: Wiadomość istnieje w bazie: {messageExists}");
+
+                    if (saved == 0 || !messageExists)
+                    {
+                        await transaction.RollbackAsync();
+                        return StatusCode(500, "Nie udało się zapisać wiadomości.");
+                    }
+
+                    await transaction.CommitAsync();
+                }
+                catch (Exception ex)
+                {
+                    await transaction.RollbackAsync();
+                    Console.WriteLine($"Create: Błąd zapisu: {ex.Message}");
+                    return StatusCode(500, $"Błąd zapisu: {ex.Message}");
+                }
 
                 return RedirectToAction(nameof(Create), new { userId = model.ReceiverId });
             }
@@ -127,8 +151,31 @@ namespace BookSwap.Controllers
                 DateSent = DateTime.UtcNow
             };
 
-            _context.Messages.Add(message);
-            await _context.SaveChangesAsync();
+            await using var transaction = await _context.Database.BeginTransactionAsync();
+            try
+            {
+                _context.Messages.Add(message);
+                var saved = await _context.SaveChangesAsync();
+                Console.WriteLine($"SendMessage: Zapisano {saved} rekordów dla wiadomości od {sender.Username} do ID {request.ReceiverId}");
+
+                // Weryfikacja zapisu w bazie
+                var messageExists = await _context.Messages.AnyAsync(m => m.Id == message.Id);
+                Console.WriteLine($"SendMessage: Wiadomość istnieje w bazie: {messageExists}");
+
+                if (saved == 0 || !messageExists)
+                {
+                    await transaction.RollbackAsync();
+                    return StatusCode(500, "Nie udało się zapisać wiadomości.");
+                }
+
+                await transaction.CommitAsync();
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                Console.WriteLine($"SendMessage: Błąd zapisu: {ex.Message}");
+                return StatusCode(500, $"Błąd zapisu: {ex.Message}");
+            }
 
             return Json(new
             {
@@ -139,7 +186,6 @@ namespace BookSwap.Controllers
         }
     }
 
-    // Model dla żądania AJAX
     public class SendMessageRequest
     {
         public int ReceiverId { get; set; }

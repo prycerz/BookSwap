@@ -1008,12 +1008,12 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\uploads\24999978-05de-447f-812b-bed8a4a2e425.png))</OriginalItemSpec>
     </StaticWebAsset>
-    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\uploads\be91657e-ac09-4e64-b6ec-49a055e4117e.png))">
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\uploads\bcec586b-2330-4a30-8b16-152ad54b732b.png))">
       <SourceType>Package</SourceType>
       <SourceId>BookSwap</SourceId>
       <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
       <BasePath>_content/BookSwap</BasePath>
-      <RelativePath>uploads/be91657e-ac09-4e64-b6ec-49a055e4117e.png</RelativePath>
+      <RelativePath>uploads/bcec586b-2330-4a30-8b16-152ad54b732b.png</RelativePath>
       <AssetKind>All</AssetKind>
       <AssetMode>All</AssetMode>
       <AssetRole>Primary</AssetRole>
@@ -1022,7 +1022,7 @@
       <AssetTraitValue></AssetTraitValue>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\uploads\be91657e-ac09-4e64-b6ec-49a055e4117e.png))</OriginalItemSpec>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\uploads\bcec586b-2330-4a30-8b16-152ad54b732b.png))</OriginalItemSpec>
     </StaticWebAsset>
   </ItemGroup>
 </Project>
