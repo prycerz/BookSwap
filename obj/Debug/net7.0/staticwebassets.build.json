@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "+5D0aqzFXm5Pnnb+i++PHhtDOguplWNrmtg22JH4Sq4=",
+  "Hash": "jkSzy4cEl9Ae9V3vQB4Uegnqql4+8vkc2CGJLHzyjfQ=",
   "Source": "BookSwap",
   "BasePath": "_content/BookSwap",
   "Mode": "Default",
@@ -83,6 +83,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "C:\\Users\\pryce\\Desktop\\BookSwap\\wwwroot\\images\\default-profile.png",
+      "SourceId": "BookSwap",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pryce\\Desktop\\BookSwap\\wwwroot\\",
+      "BasePath": "_content/BookSwap",
+      "RelativePath": "images/default-profile.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\default-profile.png"
     },
     {
       "Identity": "C:\\Users\\pryce\\Desktop\\BookSwap\\wwwroot\\js\\site.js",
@@ -1105,12 +1122,12 @@
       "OriginalItemSpec": "wwwroot\\uploads\\24999978-05de-447f-812b-bed8a4a2e425.png"
     },
     {
-      "Identity": "C:\\Users\\pryce\\Desktop\\BookSwap\\wwwroot\\uploads\\27897069-1395-464c-a3e2-50fe414f32fc.jpg",
+      "Identity": "C:\\Users\\pryce\\Desktop\\BookSwap\\wwwroot\\uploads\\47b4e662-7cec-4e20-8906-33e71f41231d.png",
       "SourceId": "BookSwap",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\pryce\\Desktop\\BookSwap\\wwwroot\\",
       "BasePath": "_content/BookSwap",
-      "RelativePath": "uploads/27897069-1395-464c-a3e2-50fe414f32fc.jpg",
+      "RelativePath": "uploads/47b4e662-7cec-4e20-8906-33e71f41231d.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -1119,7 +1136,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\uploads\\27897069-1395-464c-a3e2-50fe414f32fc.jpg"
+      "OriginalItemSpec": "wwwroot\\uploads\\47b4e662-7cec-4e20-8906-33e71f41231d.png"
     },
     {
       "Identity": "C:\\Users\\pryce\\Desktop\\BookSwap\\wwwroot\\uploads\\64f6b929-f9a5-48ec-9863-813b9ba20835.jpeg",

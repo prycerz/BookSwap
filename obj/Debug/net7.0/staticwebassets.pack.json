@@ -17,6 +17,10 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "C:\\Users\\pryce\\Desktop\\BookSwap\\wwwroot\\images\\default-profile.png",
+      "PackagePath": "staticwebassets\\images\\default-profile.png"
+    },
+    {
       "Id": "C:\\Users\\pryce\\Desktop\\BookSwap\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },
@@ -253,8 +257,8 @@
       "PackagePath": "staticwebassets\\uploads\\24999978-05de-447f-812b-bed8a4a2e425.png"
     },
     {
-      "Id": "C:\\Users\\pryce\\Desktop\\BookSwap\\wwwroot\\uploads\\27897069-1395-464c-a3e2-50fe414f32fc.jpg",
-      "PackagePath": "staticwebassets\\uploads\\27897069-1395-464c-a3e2-50fe414f32fc.jpg"
+      "Id": "C:\\Users\\pryce\\Desktop\\BookSwap\\wwwroot\\uploads\\47b4e662-7cec-4e20-8906-33e71f41231d.png",
+      "PackagePath": "staticwebassets\\uploads\\47b4e662-7cec-4e20-8906-33e71f41231d.png"
     },
     {
       "Id": "C:\\Users\\pryce\\Desktop\\BookSwap\\wwwroot\\uploads\\64f6b929-f9a5-48ec-9863-813b9ba20835.jpeg",

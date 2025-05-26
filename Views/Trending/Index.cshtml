@@ -24,17 +24,19 @@
 
                     <small class="text-muted">Added on: @book.DateAdded.ToString("yyyy-MM-dd HH:mm:ss") UTC</small>
                     <div class="d-flex align-items-center mt-2">
-                        @if (profile != null)
+                       @if (profile != null)
                         {
-                            <a asp-controller="Users" asp-action="Profile" asp-route-id="@profile.Id" style="display:flex; align-items:center; text-decoration:none; color:inherit;">
-                                <img src="~/uploads/@profile.ImagePath" alt="Profile" class="rounded-circle me-2" width="40" height="40" />
-                                <span>@profile.Username</span>
-                            </a>
+                        <a asp-controller="Users" asp-action="Profile" asp-route-id="@profile.Id" style="display:flex; align-items:center; text-decoration:none; color:inherit;">
+                        <img src="@(string.IsNullOrEmpty(profile?.ImagePath) ? "/images/default-profile.png" : $"/uploads/{profile.ImagePath}")" 
+                        alt="Profile" class="rounded-circle me-2" width="40" height="40" />
+                        <span>@profile.Username</span>
+                        </a>
                         }
                         else
                         {
-                            <span class="text-muted">Unknown user</span>
+                        <span class="text-muted">Unknown user</span>
                         }
+
                     </div>
                     <div class="mt-auto d-flex gap-2">
                         <a class="btn btn-primary" asp-controller="Books" asp-action="Details" asp-route-id="@book.Id">View</a>
