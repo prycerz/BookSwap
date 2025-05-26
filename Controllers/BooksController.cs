@@ -45,7 +45,7 @@ public class BooksController : Controller
 
         _db.Books.Add(book);
         await _db.SaveChangesAsync();
-        return RedirectToAction("MyBooks");
+        return RedirectToAction("Index", "Profile");
     }
 
 
@@ -86,7 +86,8 @@ public class BooksController : Controller
             bookToUpdate.FourthImageUrl = book.FourthImageUrl;
             // Update any other fields you need
             await _db.SaveChangesAsync();
-            return RedirectToAction("MyBooks");
+            return RedirectToAction("Index", "Profile");
+
         }
         else
         {

@@ -1,29 +1,60 @@
-@model BookSwap.Models.UserProfile
+@model BookSwap.Models.UserProfileWithBooksViewModel
+
 @{
     ViewData["Title"] = "Profile";
 }
 
-<h2>Profile of @Model.Username</h2>
+<h2>Profile of @Model.Profile.Username</h2>
 
 <button onclick="history.back()" class="btn btn-secondary mb-3">Back</button>
 
 <div>
-    @if (!string.IsNullOrEmpty(Model.ImagePath))
+    @if (!string.IsNullOrEmpty(Model.Profile.ImagePath))
     {
-        <img src="~/uploads/@Model.ImagePath" style="width: 200px; height: 200px; object-fit: cover; border-radius: 4px;" />
+        <img src="~/uploads/@Model.Profile.ImagePath" style="width: 200px; height: 200px; object-fit: cover; border-radius: 4px;" />
     }
     else
     {
         <div style="width:200px;height:200px;background:#f0f0f0;
             display:flex;align-items:center;justify-content:center;
             font-size:72px;border-radius:4px;">
-            @Model.Username[0]
+            @Model.Profile.Username[0]
         </div>
     }
 </div>
 
-<h3>@Model.Username</h3>
+<h3>@Model.Profile.Username</h3>
 
-<a asp-controller="Messages" asp-action="Create" asp-route-userId="@Model.Id" class="btn btn-primary mt-3">Napisz wiadomość</a>
+<a asp-controller="Messages" asp-action="Create" asp-route-userId="@Model.Profile.Id" class="btn btn-primary mt-3">Napisz wiadomość</a>
 
+<hr />
 
+<h4>Książki użytkownika:</h4>
+
+@if (!Model.Books.Any())
+{
+    <p>Użytkownik nie dodał jeszcze żadnych książek.</p>
+}
+else
+{
+    <div class="row">
+        @foreach (var book in Model.Books)
+        {
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <img src="@book.ImageUrl" class="card-img-top" alt="Book cover" style="height: 250px; object-fit: cover;" />
+                    <div class="card-body">
+                        <h5 class="card-title">@book.Title</h5>
+                        <small class="text-muted">Dodano: @book.DateAdded.ToString("yyyy-MM-dd HH:mm:ss") UTC</small>
+                        <p class="card-text">
+                            @(book.Description?.Length > 50 ? book.Description.Substring(0, 50) + "..." : book.Description)
+                        </p>
+                        <p class="text-muted">Wyświetlenia: @book.Views</p>
+                        <a class="btn btn-info" asp-controller="Books" asp-action="Details" asp-route-id="@book.Id">Zobacz</a>
+                        <a class="btn btn-success" asp-controller="Swaps" asp-action="Create" asp-route-targetBookId="@book.Id">Swap</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

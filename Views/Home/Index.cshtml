@@ -36,8 +36,10 @@
                     <span class="text-muted">Unknown user</span>
                         }
                     </div>
-
-                    <a class="btn btn-info mt-2" asp-controller="Books" asp-action="Details" asp-route-id="@book.Id">View</a>
+<div class="mt-auto d-flex gap-2">
+    <a class="btn btn-primary" asp-controller="Books" asp-action="Details" asp-route-id="@book.Id">View</a>
+    <a class="btn btn-success" asp-controller="Swaps" asp-action="Create" asp-route-targetBookId="@book.Id">Swap</a>
+</div>
                 </div>
             </div>
         </div>

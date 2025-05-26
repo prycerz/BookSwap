@@ -19,7 +19,24 @@ public class ProfileController : Controller
         if (username == null) return RedirectToAction("Login", "Account");
 
         var profile = _db.UserProfiles.FirstOrDefault(u => u.Username == username);
-        return View(profile ?? new UserProfile { Username = username });
+        if (profile == null)
+        {
+            profile = new UserProfile { Username = username };
+            _db.UserProfiles.Add(profile);
+            _db.SaveChanges();
+        }
+
+        var books = _db.Books
+            .Where(b => b.UserId == profile.Id)
+            .ToList();
+
+        var model = new UserProfileWithBooksViewModel
+        {
+            Profile = profile,
+            Books = books
+        };
+
+        return View(model);
     }
 
     [HttpPost]
@@ -29,7 +46,12 @@ public class ProfileController : Controller
         if (username == null || avatar == null) return RedirectToAction("Index");
 
         var profile = _db.UserProfiles.FirstOrDefault(u => u.Username == username);
-        if (profile == null) profile = new UserProfile { Username = username };
+        if (profile == null)
+        {
+            profile = new UserProfile { Username = username };
+            _db.UserProfiles.Add(profile);
+            await _db.SaveChangesAsync();
+        }
 
         var ext = Path.GetExtension(avatar.FileName).ToLower();
         if (ext != ".jpg" && ext != ".jpeg" && ext != ".png")
@@ -55,40 +77,32 @@ public class ProfileController : Controller
         }
 
         profile.ImagePath = fileName;
-
-        if (_db.UserProfiles.Any(u => u.Username == username))
-            _db.Update(profile);
-        else
-            _db.Add(profile);
-
-        await _db.SaveChangesAsync();
-        return RedirectToAction("Index");
-    }
-    [HttpPost]
-public async Task<IActionResult> Delete()
-{
-    var username = HttpContext.Session.GetString("username");
-    if (username == null) return RedirectToAction("Login", "Account");
-
-    var profile = await _db.UserProfiles.FirstOrDefaultAsync(u => u.Username == username);
-    if (profile == null) return RedirectToAction("Index");
-
-    if (!string.IsNullOrEmpty(profile.ImagePath))
-    {
-        // Usuń plik zdjęcia z folderu uploads, jeśli istnieje
-        var filePath = Path.Combine(_env.WebRootPath, "uploads", profile.ImagePath);
-        if (System.IO.File.Exists(filePath))
-        {
-            System.IO.File.Delete(filePath);
-        }
-
-        // Wyczyść ImagePath w bazie
-        profile.ImagePath = null;
         _db.UserProfiles.Update(profile);
         await _db.SaveChangesAsync();
+
+        return RedirectToAction("Index");
     }
 
-    return RedirectToAction("Index");
+    [HttpPost]
+    public async Task<IActionResult> Delete()
+    {
+        var username = HttpContext.Session.GetString("username");
+        if (username == null) return RedirectToAction("Login", "Account");
+
+        var profile = await _db.UserProfiles.FirstOrDefaultAsync(u => u.Username == username);
+        if (profile == null) return RedirectToAction("Index");
+
+        if (!string.IsNullOrEmpty(profile.ImagePath))
+        {
+            var filePath = Path.Combine(_env.WebRootPath, "uploads", profile.ImagePath);
+            if (System.IO.File.Exists(filePath)) System.IO.File.Delete(filePath);
+
+            profile.ImagePath = null;
+            _db.UserProfiles.Update(profile);
+            await _db.SaveChangesAsync();
+        }
+
+        return RedirectToAction("Index");
+    }
 }
 
-}
