@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "IxcVSqoux0cA/nerlErOX14LFwbG8n7xnrNVF2RkDNc=",
+  "Hash": "+5D0aqzFXm5Pnnb+i++PHhtDOguplWNrmtg22JH4Sq4=",
   "Source": "BookSwap",
   "BasePath": "_content/BookSwap",
   "Mode": "Default",
@@ -1154,23 +1154,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\7ee58d5c-9be4-4275-bf6b-979b35eb7b51.png"
-    },
-    {
-      "Identity": "C:\\Users\\pryce\\Desktop\\BookSwap\\wwwroot\\uploads\\9d9bcef3-1b28-4b82-9ba7-800b5eb4bdbf.png",
-      "SourceId": "BookSwap",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\pryce\\Desktop\\BookSwap\\wwwroot\\",
-      "BasePath": "_content/BookSwap",
-      "RelativePath": "uploads/9d9bcef3-1b28-4b82-9ba7-800b5eb4bdbf.png",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\uploads\\9d9bcef3-1b28-4b82-9ba7-800b5eb4bdbf.png"
     },
     {
       "Identity": "C:\\Users\\pryce\\Desktop\\BookSwap\\wwwroot\\uploads\\bd48d2df-ea78-4ceb-ab6b-41d54b48dcf2.png",
