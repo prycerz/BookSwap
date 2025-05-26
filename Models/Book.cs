@@ -24,5 +24,6 @@ namespace BookSwap.Models
 
         public DateTime DateAdded { get; set; }
         public User? User { get; set; }
+         public int Views { get; set; } = 0;
     }
 }

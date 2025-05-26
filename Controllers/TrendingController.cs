@@ -1,16 +1,16 @@
-﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using BookSwap.Models;
 using Microsoft.EntityFrameworkCore;
+using BookSwap.Models;
+using System.Diagnostics;
 
 namespace BookSwap.Controllers;
 
-public class HomeController : Controller
+public class TrendingController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
+    private readonly ILogger<TrendingController> _logger;
     private readonly AppDbContext _context;
 
-    public HomeController(ILogger<HomeController> logger, AppDbContext context)
+    public TrendingController(ILogger<TrendingController> logger, AppDbContext context)
     {
         _logger = logger;
         _context = context;
@@ -25,7 +25,7 @@ public class HomeController : Controller
 
         var books = await _context.Books
             .Include(b => b.User)
-            .OrderByDescending(b => b.DateAdded)
+            .OrderByDescending(b => b.Views) // <-- zmiana tu!
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
             .ToListAsync();
@@ -57,7 +57,5 @@ public class HomeController : Controller
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
-    
 }
-
 

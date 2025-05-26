@@ -20,6 +20,7 @@ else
                         <h5 class="card-title">@book.Title</h5>
                         <small class="text-muted">Added on: @book.DateAdded.ToString("yyyy-MM-dd HH:mm:ss") UTC</small>
                         <p class="card-text book-description">@book.Description</p>
+                        <p class="text-muted">Views: @book.Views</p>
                         <a class="btn btn-info" asp-controller="Books" asp-action="Details" asp-route-id="@book.Id">View</a>
                         @Html.Partial("Delete", book)
                         <a class="btn btn-primary" asp-controller="Books" asp-action="Edit" asp-route-id="@book.Id">Edytuj</a>

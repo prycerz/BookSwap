@@ -50,7 +50,7 @@ public class BooksController : Controller
 
 
     [HttpGet]
-    public async  Task<IActionResult> Edit(int id)
+    public async Task<IActionResult> Edit(int id)
     {
         if (HttpContext.Session.GetString("username") == null)
             return RedirectToAction("Login", "Account");
@@ -74,7 +74,7 @@ public class BooksController : Controller
         var user = await _db.Users.FirstOrDefaultAsync(u => u.Username == username);
 
         var bookToUpdate = _db.Books.FirstOrDefault(b => b.Id == book.Id);
-        if(bookToUpdate == null) return NotFound();
+        if (bookToUpdate == null) return NotFound();
 
         if (bookToUpdate != null)
         {
@@ -95,14 +95,17 @@ public class BooksController : Controller
         }
 
     }
-public async Task<IActionResult> Details(int id)
-{
-    var book = await _db.Books.Include(b => b.User).FirstOrDefaultAsync(b => b.Id == id);
-    if (book == null) return NotFound();
+    public async Task<IActionResult> Details(int id)
+    {
+        var book = await _db.Books.Include(b => b.User).FirstOrDefaultAsync(b => b.Id == id);
+        if (book == null) return NotFound();
 
-    ViewBag.BackUrl = Request.Headers["Referer"].ToString() ?? Url.Action("MyBooks", "Books");
-    return View(book);
-}
+        book.Views++;
+        await _db.SaveChangesAsync();
+
+        ViewBag.BackUrl = Request.Headers["Referer"].ToString() ?? Url.Action("MyBooks", "Books");
+        return View(book);
+    }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
@@ -119,5 +122,6 @@ public async Task<IActionResult> Details(int id)
         await _db.SaveChangesAsync();
         return RedirectToAction("MyBooks");
     }
+    
 
 }
