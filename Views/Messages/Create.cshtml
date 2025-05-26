@@ -36,9 +36,10 @@
 <form id="message-form" asp-action="Create" method="post">
     <input type="hidden" asp-for="ReceiverId" />
     <div class="input-group">
-        <input asp-for="NewMessage" id="message-input" class="form-control" placeholder="Napisz wiadomość..." autocomplete="off" />
+        <input asp-for="NewMessage" id="message-input" class="form-control" placeholder="Napisz wiadomość..." autocomplete="off" maxlength="100" />
         <button type="button" id="send-btn" class="btn btn-primary">Wyślij</button>
     </div>
+    <small id="char-count" class="text-muted">Pozostało 100 znaków</small>
     <span asp-validation-for="NewMessage" class="text-danger"></span>
 </form>
 
@@ -47,6 +48,15 @@
         // Automatycznie scrolluj na dół
         const messagesBox = document.getElementById('messages-box');
         messagesBox.scrollTop = messagesBox.scrollHeight;
+
+         // Licznik znaków
+        const input = document.getElementById('message-input');
+        const charCount = document.getElementById('char-count');
+
+        input.addEventListener('input', () => {
+            const remaining = 100 - input.value.length;
+            charCount.textContent = `Pozostało ${remaining} znaków`;
+        });
 
         // Obsługa wysyłania wiadomości przez AJAX
         document.getElementById('send-btn').addEventListener('click', async function () {
@@ -96,6 +106,7 @@
                 console.error('Błąd AJAX:', error);
                 alert(`Wystąpił błąd: ${error.message}`);
             }
+            
         });
     </script>
 }
