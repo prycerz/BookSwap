@@ -16,7 +16,10 @@
                 <img src="@book.ImageUrl" class="card-img-top book-cover" alt="Book cover" />
                 <div class="card-body">
                     <h5 class="card-title">@book.Title</h5>
-                    <p class="card-text">@book.Description</p>
+                    <p class="card-text">
+                     @(book.Description?.Length > 20 ? book.Description.Substring(0, 20) + "..." : book.Description)
+                    </p>
+
                     <p class="text-muted">Views: @book.Views</p>
 
                     <small class="text-muted">Added on: @book.DateAdded.ToString("yyyy-MM-dd HH:mm:ss") UTC</small>
