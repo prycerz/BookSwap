@@ -8,14 +8,30 @@
 
 <div class="card mb-4">
     <div class="card-body">
-        
         <img src="@Model.SelectedBook.ImageUrl" alt="okładka" 
-     style="max-height:200px; max-width:100%; object-fit:contain; display:block; margin-left:auto; margin-right:auto;" />
-<h5 class="card-title">@Model.SelectedBook.Title</h5>
+             style="max-height:200px; max-width:100%; object-fit:contain; display:block; margin-left:auto; margin-right:auto;" />
+
+        <h5 class="card-title mt-3">@Model.SelectedBook.Title</h5>
         <p class="card-text">@Model.SelectedBook.Description</p>
-        <p><strong>Właściciel:</strong> @Model.SelectedBook.User?.Username</p>
+
+        @if (Model.Profile != null)
+        {
+            <div class="d-flex align-items-center mt-3">
+                <img src="@(string.IsNullOrEmpty(Model.Profile.ImagePath) 
+                            ? "/images/default-profile.png" 
+                            : $"/uploads/{Model.Profile.ImagePath}")" 
+                     alt="Właściciel" class="rounded-circle me-2" width="40" height="40" />
+                <span> @Model.Profile.Username</span>
+            </div>
+        }
+        else
+        {
+            <p><strong>Właściciel:</strong> @Model.SelectedBook.User?.Username</p>
+        }
     </div>
 </div>
+
+
 
 <h3>Twoje książki:</h3>
 

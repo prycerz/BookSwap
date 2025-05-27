@@ -127,11 +127,16 @@ namespace BookSwap.Controllers
                     .OrderByDescending(b => b.DateAdded)
                     .ToListAsync();
 
+                var ownerProfile = await _db.UserProfiles
+                .FirstOrDefaultAsync(p => p.Username == selectedBook.User.Username);
+
                 var model = new SwapViewModel
                 {
                     SelectedBook = selectedBook,
-                    UserBooks = userBooks
+                    UserBooks = userBooks,
+                    Profile = ownerProfile
                 };
+
 
                 return View(model);
             }
