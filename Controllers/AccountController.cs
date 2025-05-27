@@ -71,7 +71,7 @@ public class AccountController : Controller
         _db.UserProfiles.Add(profile);
 
         await _db.SaveChangesAsync();
-         ViewBag.Message = "User successfully registered.";
+        ViewBag.Message = "User successfully registered.";
         return View();
     }
 
@@ -113,5 +113,33 @@ public class AccountController : Controller
         HttpContext.Session.Clear();
         return RedirectToAction("Login");
     }
+    public async Task<IActionResult> UserList()
+{
+    var role = HttpContext.Session.GetString("role");
+    if (role != "Admin")
+        return RedirectToAction("Login"); // lub AccessDenied
+
+  var usersWithProfiles = await _db.Users
+    .GroupJoin(_db.UserProfiles,
+        u => u.Username,
+        p => p.Username,
+        (u, profiles) => new { u, profiles })
+    .SelectMany(
+        up => up.profiles.DefaultIfEmpty(),
+        (up, p) => new { up.u, Profile = p })
+    .Select(x => new UserListViewModel
+    {
+        Username = x.u.Username,
+        Role = x.u.Role,
+        ProfileImageUrl = x.Profile == null || string.IsNullOrEmpty(x.Profile.ImagePath)
+            ? "/images/default-profile.png"
+            : "/uploads/" + x.Profile.ImagePath
+    })
+    .ToListAsync();
+
+return View(usersWithProfiles);
+
+}
+
 }
 
