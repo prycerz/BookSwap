@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookSwap.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250527124942_AddOwnerIdsToSwapRequest")]
+    partial class AddOwnerIdsToSwapRequest
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.18");
@@ -101,17 +104,11 @@ namespace BookSwap.Migrations
                     b.Property<int>("OfferedBookId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("OfferedBookOwnerId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int>("TargetBookId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("TargetBookOwnerId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -178,9 +175,9 @@ namespace BookSwap.Migrations
                         new
                         {
                             Id = 1,
-                            PasswordHash = "$2a$11$PHMpxiBUeBp9Z1RT2s6YJOlqKsIh4.Tv5jBwcFOJSyjCbViuaLl2e",
+                            PasswordHash = "$2a$11$UDV0qZUARMtf6fTbkkCJd.Yu1vJ2ObOUcSpthDj1k3jXh3j8KNQIS",
                             Role = "Admin",
-                            Token = "6efd0588-d267-4718-b82c-d91b2f4d5dc6",
+                            Token = "279fb033-3e23-4158-983b-3a4ac3c287a6",
                             Username = "admin"
                         });
                 });

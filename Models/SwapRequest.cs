@@ -14,6 +14,8 @@ namespace BookSwap.Models
 
         public int TargetBookId { get; set; }
         public Book TargetBook { get; set; }
+        public int? TargetBookOwnerId { get; set; }
+        public int? OfferedBookOwnerId { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 

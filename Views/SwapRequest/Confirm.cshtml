@@ -54,5 +54,12 @@
             </div>
         </div>
     </div>
+
+    <form asp-controller="SwapRequest" asp-action="Create" method="post" class="mt-4 text-center">
+    <input type="hidden" name="TargetBookId" value="@Model.TargetBook.Id" />
+    <input type="hidden" name="OfferedBookId" value="@Model.OfferedBook.Id" />
+    <button type="submit" class="btn btn-primary btn-lg">Wyślij prośbę o swapa</button>
+</form>
+
 </div>
 
