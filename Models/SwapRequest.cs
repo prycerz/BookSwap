@@ -5,24 +5,19 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace BookSwap.Models
 {
     public class SwapRequest
+
     {
         public int Id { get; set; }
 
-        [Required]
         public int OfferedBookId { get; set; }
-
-        [Required]
-        public int TargetBookId { get; set; }
-
-        [Required]
-        public DateTime RequestDate { get; set; } = DateTime.Now;
-
-        public bool IsAccepted { get; set; } = false;
-
-        [ForeignKey("OfferedBookId")]
         public Book OfferedBook { get; set; }
 
-        [ForeignKey("TargetBookId")]
+        public int TargetBookId { get; set; }
         public Book TargetBook { get; set; }
-    }
+
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+        public string Status { get; set; } = "Pending"; // Pending, Accepted, Rejected
+    } 
+
 }

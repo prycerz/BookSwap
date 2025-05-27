@@ -1,0 +1,58 @@
+@model BookSwap.Models.SwapConfirmViewModel
+
+@{
+    ViewData["Title"] = "Potwierdzenie wymiany";
+}
+
+<style>
+    .swap-confirm .card {
+        max-height: 450px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
+    .swap-confirm .card img {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+        border-radius: 4px;
+        margin-bottom: 10px;
+    }
+
+    .swap-confirm .card-body {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+</style>
+
+<h2>Potwierdzenie wymiany książek</h2>
+
+<div class="row swap-confirm">
+    <div class="col-md-6">
+        <h4 class="text-center">Książka, którą chcesz otrzymać:</h4>
+        <div class="card">
+            <img src="@Model.TargetBook.ImageUrl" alt="okładka" />
+            <div class="card-body">
+                <h5 class="card-title">@Model.TargetBook.Title</h5>
+                <p class="card-text">@Model.TargetBook.Description</p>
+                <p><strong>Właściciel:</strong> @Model.TargetBook.User?.Username</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <h4 class="text-center">Książka, którą oferujesz:</h4>
+        <div class="card">
+            <img src="@Model.OfferedBook.ImageUrl" alt="okładka" />
+            <div class="card-body">
+                <h5 class="card-title">@Model.OfferedBook.Title</h5>
+                <p class="card-text">@Model.OfferedBook.Description</p>
+                <p><strong>Właściciel:</strong> @Model.OfferedBook.User?.Username</p>
+            </div>
+        </div>
+    </div>
+</div>
+

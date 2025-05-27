@@ -10,6 +10,8 @@ public class AppDbContext : DbContext
     public DbSet<Book> Books { get; set; }
     public DbSet<UserProfile> UserProfiles { get; set; }
     public DbSet<Message> Messages { get; set; }
+    public DbSet<SwapRequest> SwapRequests { get; set; }
+
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -20,7 +22,7 @@ public class AppDbContext : DbContext
         );
         // add profile for admin
         modelBuilder.Entity<UserProfile>().HasData(
-            new UserProfile { Id = 1,  Username = "admin" }
+            new UserProfile { Id = 1, Username = "admin" }
         );
     }
 }

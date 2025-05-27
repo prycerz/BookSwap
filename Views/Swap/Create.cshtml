@@ -31,8 +31,6 @@
     </div>
 </div>
 
-
-
 <h3>Twoje książki:</h3>
 
 @if (Model.UserBooks.Count == 0)
@@ -47,15 +45,22 @@ else
             <div class="col-md-4 mb-3">
                 <div class="card h-100">
                     <img src="@book.ImageUrl" class="card-img-top" 
-     style="max-height:200px; max-width:100%; object-fit:contain; display:block; margin-left:auto; margin-right:auto;" />
+                         style="max-height:200px; max-width:100%; object-fit:contain; display:block; margin-left:auto; margin-right:auto;" />
 
                     <div class="card-body">
                         <h5 class="card-title">@book.Title</h5>
                         <p class="card-text">@book.Description</p>
-                        <!-- tutaj później przycisk do potwierdzenia wymiany -->
+
+                        <a asp-controller="SwapRequest" asp-action="Confirm" 
+                           asp-route-targetBookId="@Model.SelectedBook.Id" 
+                           asp-route-offeredBookId="@book.Id" 
+                           class="btn btn-primary">
+                            Do swapa
+                        </a>
                     </div>
                 </div>
             </div>
         }
     </div>
 }
+
