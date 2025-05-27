@@ -1,11 +1,20 @@
-<h2>Register</h2>
+@{
+    ViewData["Title"] = "Register User";
+}
+
+<h2>Register New User</h2>
+
 <form method="post">
-    <input name="username" placeholder="Username" required />
-    <input name="password" type="password" placeholder="Password" required />
-    <button type="submit">Register</button>
+    <p><input name="username" placeholder="Username" required /></p>
+    <p><input name="password" type="password" placeholder="Password" required /></p>
+    <p><button type="submit" class="btn btn-primary">Register</button></p>
 </form>
-<a href="/Account/Login">Already have an account? Login</a>
+
 @if (ViewBag.Error != null)
 {
-    <p style="color:red">@ViewBag.Error</p>
+    <div class="alert alert-danger">@ViewBag.Error</div>
+}
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success">@ViewBag.Message</div>
 }

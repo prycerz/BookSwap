@@ -1,17 +1,18 @@
 using Microsoft.EntityFrameworkCore;
-using BookSwap.Models; // jeśli AppDbContext jest w Models
+using BookSwap.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpContextAccessor();
+
 // Sesja
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
 
-// Rejestracja AppDbContext
+// Rejestracja DbContext
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite("Data Source=bookswap.db")); // <== To dodaj
+    options.UseSqlite("Data Source=bookswap.db"));
 
 var app = builder.Build();
 
@@ -26,12 +27,12 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseSession(); // <== Sesja przed autoryzacją
+app.UseSession();          // <-- musi być tutaj, przed autoryzacją
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Account}/{action=Login}/{id?}"); // <== Możesz ustawić Login jako domyślną stronę
+    pattern: "{controller=Account}/{action=Login}/{id?}");
 
 app.Run();
 

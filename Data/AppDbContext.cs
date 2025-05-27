@@ -15,14 +15,28 @@ public class AppDbContext : DbContext
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        var adminPassword = BCrypt.Net.BCrypt.HashPassword("admin123");
-        modelBuilder.Entity<User>().HasData(
-            new User { Id = 1, Username = "admin", PasswordHash = adminPassword, Role = "Admin" }
-        );
-        // add profile for admin
-        modelBuilder.Entity<UserProfile>().HasData(
-            new UserProfile { Id = 1, Username = "admin" }
-        );
-    }
+{
+    base.OnModelCreating(modelBuilder);
+
+    var adminPassword = BCrypt.Net.BCrypt.HashPassword("admin123");
+
+    modelBuilder.Entity<User>().HasData(
+        new User 
+        { 
+            Id = 1, 
+            Username = "admin", 
+            PasswordHash = adminPassword, 
+            Role = "Admin" 
+        }
+    );
+
+    modelBuilder.Entity<UserProfile>().HasData(
+        new UserProfile 
+        { 
+            Id = 1, 
+            Username = "admin" 
+        }
+    );
+}
+
 }

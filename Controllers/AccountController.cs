@@ -25,6 +25,8 @@ public class AccountController : Controller
         {
             HttpContext.Session.SetString("username", username);
             HttpContext.Session.SetInt32("userId", user.Id);
+            HttpContext.Session.SetString("role", user.Role);
+
             return RedirectToAction("Index", "Home");
         }
         ViewBag.Error = "Invalid credentials";
@@ -33,16 +35,19 @@ public class AccountController : Controller
 
     public IActionResult Register()
     {
-        if (HttpContext.Session.GetString("username") != null)
-            return RedirectToAction("Welcome");
+        var role = HttpContext.Session.GetString("role");
+        if (role != "Admin")
+            return RedirectToAction("Login"); // albo inna strona np. AccessDenied
+
         return View();
     }
 
     [HttpPost]
     public async Task<IActionResult> Register(string username, string password)
     {
-        if (HttpContext.Session.GetString("username") != null)
-            return RedirectToAction("Welcome");
+        var role = HttpContext.Session.GetString("role");
+        if (role != "Admin")
+            return RedirectToAction("Login");
 
         if (await _db.Users.AnyAsync(u => u.Username == username))
         {
@@ -54,6 +59,7 @@ public class AccountController : Controller
         {
             Username = username,
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(password),
+            Role = "User" // lub inna domyślna rola
         };
 
         _db.Users.Add(user);
@@ -64,10 +70,11 @@ public class AccountController : Controller
         };
         _db.UserProfiles.Add(profile);
 
-
         await _db.SaveChangesAsync();
-        return RedirectToAction("Login");
+         ViewBag.Message = "User successfully registered.";
+        return View();
     }
+
 
     public IActionResult ForgotPassword()
     {
