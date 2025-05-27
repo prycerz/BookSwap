@@ -1,0 +1,41 @@
+@model BookSwap.Models.SwapViewModel
+
+@{
+    ViewData["Title"] = "Propozycja wymiany";
+}
+
+<h2>Wymiana za książkę:</h2>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <h5 class="card-title">@Model.SelectedBook.Title</h5>
+        <p class="card-text">@Model.SelectedBook.Description</p>
+        <img src="/uploads/@Model.SelectedBook.ImageUrl" alt="okładka" style="max-height:200px;" />
+        <p><strong>Właściciel:</strong> @Model.SelectedBook.User?.Username</p>
+    </div>
+</div>
+
+<h3>Twoje książki:</h3>
+
+@if (Model.UserBooks.Count == 0)
+{
+    <p>Nie masz jeszcze żadnych książek do zaproponowania.</p>
+}
+else
+{
+    <div class="row">
+        @foreach (var book in Model.UserBooks)
+        {
+            <div class="col-md-4 mb-3">
+                <div class="card h-100">
+                    <img src="/uploads/@book.ImageUrl" class="card-img-top" style="max-height:200px; object-fit:cover;" />
+                    <div class="card-body">
+                        <h5 class="card-title">@book.Title</h5>
+                        <p class="card-text">@book.Description</p>
+                        <!-- tutaj później przycisk do potwierdzenia wymiany -->
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
