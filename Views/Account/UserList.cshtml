@@ -8,6 +8,7 @@
             <th>Zdjęcie</th>
             <th>Nazwa użytkownika</th>
             <th>Rola</th>
+            <th>Akcje</th>
         </tr>
     </thead>
     <tbody>
@@ -19,6 +20,19 @@
                 </td>
                 <td>@user.Username</td>
                 <td>@user.Role</td>
+                <td>
+    @if (user.Role == "User")
+    {
+        <form asp-action="DeleteUser" asp-route-username="@user.Username" method="post" onsubmit="return confirm('Czy na pewno chcesz usunąć użytkownika?');">
+            <button type="submit" class="btn btn-danger btn-sm">Usuń</button>
+        </form>
+    }
+    else
+    {
+        <span class="text-muted">Nie można usunąć</span>
+    }
+</td>
+
             </tr>
         }
     </tbody>

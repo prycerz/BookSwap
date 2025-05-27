@@ -114,32 +114,69 @@ public class AccountController : Controller
         return RedirectToAction("Login");
     }
     public async Task<IActionResult> UserList()
+    {
+        var role = HttpContext.Session.GetString("role");
+        if (role != "Admin")
+            return RedirectToAction("Login"); // lub AccessDenied
+
+        var usersWithProfiles = await _db.Users
+          .GroupJoin(_db.UserProfiles,
+              u => u.Username,
+              p => p.Username,
+              (u, profiles) => new { u, profiles })
+          .SelectMany(
+              up => up.profiles.DefaultIfEmpty(),
+              (up, p) => new { up.u, Profile = p })
+          .Select(x => new UserListViewModel
+          {
+              Username = x.u.Username,
+              Role = x.u.Role,
+              ProfileImageUrl = x.Profile == null || string.IsNullOrEmpty(x.Profile.ImagePath)
+                  ? "/images/default-profile.png"
+                  : "/uploads/" + x.Profile.ImagePath
+          })
+          .ToListAsync();
+
+        return View(usersWithProfiles);
+
+    }
+[HttpPost]
+public async Task<IActionResult> DeleteUser(string username)
 {
     var role = HttpContext.Session.GetString("role");
     if (role != "Admin")
-        return RedirectToAction("Login"); // lub AccessDenied
+        return RedirectToAction("Login");
 
-  var usersWithProfiles = await _db.Users
-    .GroupJoin(_db.UserProfiles,
-        u => u.Username,
-        p => p.Username,
-        (u, profiles) => new { u, profiles })
-    .SelectMany(
-        up => up.profiles.DefaultIfEmpty(),
-        (up, p) => new { up.u, Profile = p })
-    .Select(x => new UserListViewModel
-    {
-        Username = x.u.Username,
-        Role = x.u.Role,
-        ProfileImageUrl = x.Profile == null || string.IsNullOrEmpty(x.Profile.ImagePath)
-            ? "/images/default-profile.png"
-            : "/uploads/" + x.Profile.ImagePath
-    })
-    .ToListAsync();
+    // Znajdź użytkownika
+    var user = await _db.Users.FirstOrDefaultAsync(u => u.Username == username);
+    if (user == null)
+        return NotFound();
 
-return View(usersWithProfiles);
+    // Usuń książki powiązane z user.Id
+    var booksToDelete = _db.Books.Where(b => b.UserId == user.Id);
+    _db.Books.RemoveRange(booksToDelete);
 
+    // Usuń wiadomości gdzie SenderId lub ReceiverId == user.Id
+    var messagesToDelete = _db.Messages.Where(m => m.SenderId == user.Id || m.ReceiverId == user.Id);
+    _db.Messages.RemoveRange(messagesToDelete);
+
+    // Usuń SwapRequests gdzie OfferedBookOwnerId lub TargetBookOwnerId == user.Id
+    var swapRequestsToDelete = _db.SwapRequests.Where(s => s.OfferedBookOwnerId == user.Id || s.TargetBookOwnerId == user.Id);
+    _db.SwapRequests.RemoveRange(swapRequestsToDelete);
+
+    // Usuń profil użytkownika (UserProfile) gdzie Id == user.Id
+    var profileToDelete = await _db.UserProfiles.FirstOrDefaultAsync(p => p.Id == user.Id);
+    if (profileToDelete != null)
+        _db.UserProfiles.Remove(profileToDelete);
+
+    // Usuń samego użytkownika
+    _db.Users.Remove(user);
+
+    await _db.SaveChangesAsync();
+
+    return RedirectToAction("UserList");
 }
+
 
 }
 
