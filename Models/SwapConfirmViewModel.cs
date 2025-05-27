@@ -8,4 +8,6 @@ public class SwapConfirmViewModel
     public Book OfferedBook { get; set; }
     public int? TargetBookOwnerId { get; set; }
     public int? OfferedBookOwnerId { get; set; }
+    
+    public string Status { get; set; }
 }

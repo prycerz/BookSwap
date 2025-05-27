@@ -36,27 +36,50 @@
     </div>
 </div>
 
-@if (isTargetBookMine)
+@if (Model.Status == "Accepted" || Model.Status == "Rejected")
 {
-    <div class="mt-3 d-flex justify-content-center gap-3">
-        <form asp-controller="SwapRequest" asp-action="Accept" method="post">
+    <p class="text-center mt-3">
+        <strong>Ten swap ma status: @Model.Status</strong>
+    </p>
+}
+else if (isTargetBookMine)
+{
+    <div id="actionButtons" class="mt-3 d-flex justify-content-center gap-3">
+        <form asp-controller="SwapRequest" asp-action="Accept" method="post" class="swapForm">
             <input type="hidden" name="id" value="@swapId" />
             <button type="submit" class="btn btn-success">Accept</button>
         </form>
 
-        <form asp-controller="SwapRequest" asp-action="Decline" method="post">
+        <form asp-controller="SwapRequest" asp-action="Decline" method="post" class="swapForm">
             <input type="hidden" name="id" value="@swapId" />
             <button type="submit" class="btn btn-danger">Decline</button>
         </form>
     </div>
+
+    <p id="statusMessage" class="text-center mt-3" style="display:none; font-weight:bold;">
+        Ten swap już został oceniony. Nie możesz zmienić jego statusu.
+    </p>
+
+    <script>
+        // Pobierz wszystkie formularze akcji (Accept/Decline)
+        const forms = document.querySelectorAll('.swapForm');
+        const actionButtonsDiv = document.getElementById('actionButtons');
+        const statusMessage = document.getElementById('statusMessage');
+
+        forms.forEach(form => {
+            form.addEventListener('submit', () => {
+                // Ukryj przyciski
+                actionButtonsDiv.style.display = 'none';
+                // Pokaż komunikat
+                statusMessage.style.display = 'block';
+            });
+        });
+    </script>
 }
 else
 {
     <p class="text-center text-muted mt-3">
-        Jesteś autorem swapa. Musisz poczekac na decyzję drugiej osoby.</p>
-        <p class="text-center text-muted mt-3">Nie możesz akceptować ani odrzucać tej propozycji wymiany.</p>
+        Jesteś autorem swapa. Musisz poczekać na decyzję drugiej osoby.<br />
+        Nie możesz akceptować ani odrzucać tej propozycji wymiany.
+    </p>
 }
-
-
-
-

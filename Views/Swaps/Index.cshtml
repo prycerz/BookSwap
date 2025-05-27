@@ -18,68 +18,58 @@
         </tr>
     </thead>
     <tbody>
-   @foreach (var swap in Model)
-{
-    bool isCurrentUserOffering = currentUserId == swap.OfferedBookOwnerId;
-
-    var otherUser = isCurrentUserOffering
-        ? swap.TargetBook.User
-        : swap.OfferedBook.User;
-
-    profiles.TryGetValue(otherUser.Username, out var profile);
-
-    <tr>
-        <td>
-    @if (swap.OfferedBook.User.Id == currentUserId)
+    @foreach (var swap in Model)
     {
-        <text>
-            <strong>Oferujesz:</strong> @swap.OfferedBook.Title <br />
-            <strong>Otrzymujesz:</strong> @swap.TargetBook.Title (od: @swap.TargetBook.User?.Username)
-        </text>
-    }
-    else
-    {
-        <text>
-            <strong>Otrzymujesz:</strong> @swap.OfferedBook.Title (od: @swap.OfferedBook.User?.Username) <br />
-            <strong>Oferujesz:</strong> @swap.TargetBook.Title
-        </text>
-    }
-</td>
-        <td>
-            @if (swap.Status == "Pending")
-{
-    <a asp-controller="SwapRequest" asp-action="Decision" asp-route-id="@swap.Id" class="badge bg-warning text-dark" style="text-decoration:none;">
-        Pending
-    </a>
-}
+        bool isCurrentUserOffering = currentUserId == swap.OfferedBookOwnerId;
 
-            else if (swap.Status == "Accepted")
-            {
-                <span class="badge bg-success">Accepted</span>
-            }
-            else if (swap.Status == "Rejected")
-            {
-                <span class="badge bg-danger">Rejected</span>
-            }
-            else
-            {
-                @swap.Status
-            }
-        </td>
-        <td>@swap.CreatedAt.ToLocalTime().ToString("g")</td>
-        <td>
-    <a asp-controller="Messages" asp-action="Create" asp-route-userId="@otherUser.Id" style="text-decoration: none; color: inherit;">
-        <div class="d-flex align-items-center" style="cursor:pointer;">
-            <img src="@(string.IsNullOrEmpty(profile?.ImagePath) ? "/images/default-profile.png" : "/uploads/" + profile.ImagePath)" 
-                 alt="Zdjęcie użytkownika" 
-                 style="width:40px; height:40px; object-fit:cover; border-radius:50%; margin-right:10px;" />
-            <span>@otherUser.Username</span>
-        </div>
-    </a>
-</td>
+        var otherUser = isCurrentUserOffering
+            ? swap.TargetBook.User
+            : swap.OfferedBook.User;
 
-    </tr>
-} @* To jest zamknięcie bloku foreach *@
+        profiles.TryGetValue(otherUser.Username, out var profile);
+
+        <tr>
+            <td>
+                @if (swap.OfferedBook.User.Id == currentUserId)
+                {
+                    <text>
+                        <strong>Oferujesz:</strong> @swap.OfferedBook.Title <br />
+                        <strong>Otrzymujesz:</strong> @swap.TargetBook.Title (od: @swap.TargetBook.User?.Username)
+                    </text>
+                }
+                else
+                {
+                    <text>
+                        <strong>Otrzymujesz:</strong> @swap.OfferedBook.Title (od: @swap.OfferedBook.User?.Username) <br />
+                        <strong>Oferujesz:</strong> @swap.TargetBook.Title
+                    </text>
+                }
+            </td>
+            <td>
+                @if (swap.Status == "Pending" || swap.Status == "Accepted" || swap.Status == "Rejected")
+                {
+                    <a asp-controller="SwapRequest" asp-action="Decision" asp-route-id="@swap.Id" class="badge @(swap.Status == "Pending" ? "bg-warning text-dark" : swap.Status == "Accepted" ? "bg-success" : "bg-danger")" style="text-decoration:none;">
+                        @swap.Status
+                    </a>
+                }
+                else
+                {
+                    @swap.Status
+                }
+            </td>
+            <td>@swap.CreatedAt.ToLocalTime().ToString("g")</td>
+            <td>
+                <a asp-controller="Messages" asp-action="Create" asp-route-userId="@otherUser.Id" style="text-decoration: none; color: inherit;">
+                    <div class="d-flex align-items-center" style="cursor:pointer;">
+                        <img src="@(string.IsNullOrEmpty(profile?.ImagePath) ? "/images/default-profile.png" : "/uploads/" + profile.ImagePath)" 
+                             alt="Zdjęcie użytkownika" 
+                             style="width:40px; height:40px; object-fit:cover; border-radius:50%; margin-right:10px;" />
+                        <span>@otherUser.Username</span>
+                    </div>
+                </a>
+            </td>
+        </tr>
+    }
     </tbody>
 </table>
 

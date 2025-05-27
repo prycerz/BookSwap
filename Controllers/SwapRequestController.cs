@@ -17,23 +17,30 @@ namespace BookSwap.Controllers
 
         // GET: SwapRequest/Confirm?targetBookId=...&offeredBookId=...
         public async Task<IActionResult> Confirm(int targetBookId, int offeredBookId)
-        {
-            var targetBook = await _db.Books.Include(b => b.User).FirstOrDefaultAsync(b => b.Id == targetBookId);
-            var offeredBook = await _db.Books.Include(b => b.User).FirstOrDefaultAsync(b => b.Id == offeredBookId);
+{
+    var targetBook = await _db.Books.Include(b => b.User).FirstOrDefaultAsync(b => b.Id == targetBookId);
+    var offeredBook = await _db.Books.Include(b => b.User).FirstOrDefaultAsync(b => b.Id == offeredBookId);
 
-            if (targetBook == null || offeredBook == null)
-                return NotFound();
+    if (targetBook == null || offeredBook == null)
+        return NotFound();
 
-            var model = new SwapConfirmViewModel
-            {
-                TargetBook = targetBook,
-                OfferedBook = offeredBook,
-                TargetBookOwnerId = targetBook.User?.Id,
-                OfferedBookOwnerId = offeredBook.User?.Id
-            };
+    // Szukamy istniejącego swapu, jeśli istnieje
+    var swap = await _db.SwapRequests.FirstOrDefaultAsync(s => 
+        s.TargetBookId == targetBookId && s.OfferedBookId == offeredBookId);
 
-            return View(model);
-        }
+    var model = new SwapConfirmViewModel
+    {
+        TargetBook = targetBook,
+        OfferedBook = offeredBook,
+        Status = swap?.Status ?? "No Swap",  // jeśli nie ma swap, status "No Swap"
+        TargetBookOwnerId = targetBook.User?.Id,
+        OfferedBookOwnerId = offeredBook.User?.Id,
+        
+    };
+
+    return View(model);
+}
+
         
 
 
@@ -88,7 +95,8 @@ public IActionResult Decision(int id)
     var model = new SwapConfirmViewModel
     {
         OfferedBook = swap.OfferedBook,
-        TargetBook = swap.TargetBook
+        TargetBook = swap.TargetBook,
+        Status = swap.Status
     };
 
     return View("SwapDecision", model);
