@@ -1,0 +1,47 @@
+@model List<BookSwap.Models.SwapRequest>
+
+@{
+    ViewData["Title"] = "Moje Swapy";
+}
+
+<h2>Moje Swapy</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Propozycja wymiany</th>
+            <th>Status</th>
+            <th>Data utworzenia</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var swap in Model)
+        {
+            <tr>
+                <td>
+                    <strong>Otrzymujesz:</strong> @swap.TargetBook.Title (właściciel: @swap.TargetBook.User?.Username) <br />
+                    <strong>Oferujesz:</strong> @swap.OfferedBook.Title (właściciel: @swap.OfferedBook.User?.Username)
+                </td>
+                <td>
+                    @if (swap.Status == "Pending")
+                    {
+                        <span class="badge bg-warning text-dark">Pending</span>
+                    }
+                    else if (swap.Status == "Accepted")
+                    {
+                        <span class="badge bg-success">Accepted</span>
+                    }
+                    else if (swap.Status == "Rejected")
+                    {
+                        <span class="badge bg-danger">Rejected</span>
+                    }
+                    else
+                    {
+                        @swap.Status
+                    }
+                </td>
+                <td>@swap.CreatedAt.ToLocalTime().ToString("g")</td>
+            </tr>
+        }
+    </tbody>
+</table>
