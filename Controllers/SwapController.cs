@@ -124,6 +124,7 @@ namespace BookSwap.Controllers
 
                 var userBooks = await _db.Books
                     .Where(b => b.UserId == profile.Id && b.Id != targetBookId)
+                    .OrderByDescending(b => b.DateAdded)
                     .ToListAsync();
 
                 var model = new SwapViewModel
