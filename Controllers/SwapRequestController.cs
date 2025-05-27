@@ -74,15 +74,26 @@ public IActionResult Decision(int id)
     if (swap == null)
         return NotFound();
 
+    var currentUsername = HttpContext.Session.GetString("username");
+    if (string.IsNullOrEmpty(currentUsername))
+        return RedirectToAction("Login", "Account"); // albo inna obsługa braku sesji
+
+    var currentUser = _db.Users.FirstOrDefault(u => u.Username == currentUsername);
+    if (currentUser == null)
+        return Unauthorized();
+
+    ViewData["CurrentUserId"] = currentUser.Id;
+    ViewData["SwapId"] = swap.Id;
+
     var model = new SwapConfirmViewModel
     {
         OfferedBook = swap.OfferedBook,
         TargetBook = swap.TargetBook
     };
 
-    ViewData["SwapId"] = swap.Id;
     return View("SwapDecision", model);
 }
+
 
 
 [HttpPost]

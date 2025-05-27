@@ -1,42 +1,38 @@
 @model BookSwap.Models.SwapConfirmViewModel
 @{
-    ViewData["Title"] = "Zarządzaj wymianą";
-    var swapId = (int)ViewData["SwapId"];
-}
+    var currentUserId = (int)ViewData["CurrentUserId"];
+    bool isTargetBookMine = Model.TargetBook.User?.Id == currentUserId;
+    bool isOfferedBookMine = Model.OfferedBook.User?.Id == currentUserId;
 
-<h2>Potwierdź lub odrzuć wymianę</h2>
+    // Jeśli Twoja książka powinna być po lewej, a cudza po prawej:
+    var leftBook = isTargetBookMine ? Model.TargetBook : Model.OfferedBook;
+    var rightBook = isTargetBookMine ? Model.OfferedBook : Model.TargetBook;
+}
 
 <div class="row swap-confirm">
     <div class="col-md-6">
-        <h4 class="text-center">Książka, którą chcesz otrzymać:</h4>
+        <h4 class="text-center">Twoja książka:</h4>
         <div class="card">
-            <img src="@Model.TargetBook.ImageUrl" alt="okładka" />
+            <img src="@leftBook.ImageUrl" alt="okładka" />
             <div class="card-body">
-                <h5 class="card-title">@Model.TargetBook.Title</h5>
-                <p>@Model.TargetBook.Description</p>
-                <p><strong>Właściciel:</strong> @Model.TargetBook.User?.Username</p>
+                <h5 class="card-title">@leftBook.Title</h5>
+                <p>@leftBook.Description</p>
+                <p><strong>Właściciel:</strong> @leftBook.User?.Username</p>
             </div>
         </div>
     </div>
 
     <div class="col-md-6">
-        <h4 class="text-center">Książka, którą oferujesz:</h4>
+        <h4 class="text-center">Książka do wymiany:</h4>
         <div class="card">
-            <img src="@Model.OfferedBook.ImageUrl" alt="okładka" />
+            <img src="@rightBook.ImageUrl" alt="okładka" />
             <div class="card-body">
-                <h5 class="card-title">@Model.OfferedBook.Title</h5>
-                <p>@Model.OfferedBook.Description</p>
-                <p><strong>Właściciel:</strong> @Model.OfferedBook.User?.Username</p>
+                <h5 class="card-title">@rightBook.Title</h5>
+                <p>@rightBook.Description</p>
+                <p><strong>Właściciel:</strong> @rightBook.User?.Username</p>
             </div>
         </div>
     </div>
 </div>
-
-<form method="post" asp-controller="SwapRequest" asp-action="Accept" asp-route-id="@swapId" class="mt-4 text-center d-inline">
-    <button type="submit" class="btn btn-success btn-lg">Akceptuj</button>
-</form>
-<form method="post" asp-controller="SwapRequest" asp-action="Decline" asp-route-id="@swapId" class="mt-4 text-center d-inline">
-    <button type="submit" class="btn btn-danger btn-lg">Odrzuć</button>
-</form>
 
 
