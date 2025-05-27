@@ -105,7 +105,7 @@ public IActionResult Accept(int id)
     swap.Status = "Accepted";
     _db.SaveChanges();
 
-    return RedirectToAction("Index");
+    return RedirectToAction("Index", "Swaps");
 }
 
 [HttpPost]
@@ -117,7 +117,7 @@ public IActionResult Decline(int id)
     swap.Status = "Rejected";
     _db.SaveChanges();
 
-    return RedirectToAction("Index");
+    return RedirectToAction("Index", "Swaps");
 }
 
 
