@@ -17,7 +17,9 @@ namespace BookSwap.Controllers
 {
     var username = HttpContext.Session.GetString("username");
     if (string.IsNullOrEmpty(username))
+    {
         return RedirectToAction("Login", "Account");
+    }
 
     var user = await _db.Users.FirstOrDefaultAsync(u => u.Username == username);
     if (user == null)
@@ -37,25 +39,27 @@ namespace BookSwap.Controllers
         .OrderByDescending(s => s.CreatedAt)
         .ToListAsync();
 
-    // Zamień miejscami książki i właścicieli jeśli aktualny user nie jest oferującym
-    foreach (var swap in swaps)
-    {
-        if (swap.OfferedBookOwnerId != userId)
-        {
-            // Zamiana książek
-            var tempBook = swap.OfferedBook;
-            swap.OfferedBook = swap.TargetBook;
-            swap.TargetBook = tempBook;
+    // Pobierz wszystkie username, których potrzebujesz do profili
+    var usernames = swaps
+        .SelectMany(s => new[] { s.TargetBook.User.Username, s.OfferedBook.User.Username })
+        .Distinct()
+        .ToList();
 
-            // Zamiana właścicieli
-            var tempOwnerId = swap.OfferedBookOwnerId;
-            swap.OfferedBookOwnerId = swap.TargetBookOwnerId;
-            swap.TargetBookOwnerId = tempOwnerId;
-        }
-    }
+    // Pobierz profile na podstawie username
+    var profiles = await _db.UserProfiles
+        .Where(p => usernames.Contains(p.Username))
+        .ToListAsync();
+
+    // Zrób słownik username -> UserProfile dla łatwego dostępu
+    var profileDict = profiles.ToDictionary(p => p.Username);
+
+    // Przekaż do widoku swapy i słownik profili
+    ViewData["CurrentUserId"] = userId;
+    ViewData["Profiles"] = profileDict;
 
     return View(swaps);
 }
+
 
     }
 }

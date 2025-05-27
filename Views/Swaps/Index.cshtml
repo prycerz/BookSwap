@@ -2,6 +2,8 @@
 
 @{
     ViewData["Title"] = "Moje Swapy";
+    int currentUserId = (int)ViewData["CurrentUserId"];
+    var profiles = (Dictionary<string, BookSwap.Models.UserProfile>)ViewData["Profiles"];
 }
 
 <h2>Moje Swapy</h2>
@@ -12,11 +14,19 @@
             <th>Propozycja wymiany</th>
             <th>Status</th>
             <th>Data utworzenia</th>
+            <th>Od użytkownika</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var swap in Model)
         {
+            var otherUser = currentUserId == swap.OfferedBookOwnerId 
+                ? swap.TargetBook.User 
+                : swap.OfferedBook.User;
+
+            // Spróbuj znaleźć profil użytkownika
+            profiles.TryGetValue(otherUser.Username, out var profile);
+
             <tr>
                 <td>
                     <strong>Otrzymujesz:</strong> @swap.TargetBook.Title (właściciel: @swap.TargetBook.User?.Username) <br />
@@ -41,7 +51,17 @@
                     }
                 </td>
                 <td>@swap.CreatedAt.ToLocalTime().ToString("g")</td>
+                <td>
+                   <div class="d-flex align-items-center">
+                    <img src="@(string.IsNullOrEmpty(profile?.ImagePath) ? "/images/default-profile.png" : "/uploads/"+profile.ImagePath)" 
+                        alt="Zdjęcie użytkownika" 
+                        style="width:40px; height:40px; object-fit:cover; border-radius:50%; margin-right:10px;" />
+                    <span>@otherUser.Username</span>
+                    </div>
+
+                </td>
             </tr>
         }
     </tbody>
 </table>
+
