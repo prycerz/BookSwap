@@ -16,51 +16,102 @@ namespace BookSwap.Controllers
         }
 
         // GET: SwapRequest/Confirm?targetBookId=...&offeredBookId=...
-       public async Task<IActionResult> Confirm(int targetBookId, int offeredBookId)
-    {
-        var targetBook = await _db.Books.Include(b => b.User).FirstOrDefaultAsync(b => b.Id == targetBookId);
-        var offeredBook = await _db.Books.Include(b => b.User).FirstOrDefaultAsync(b => b.Id == offeredBookId);
-
-        if (targetBook == null || offeredBook == null)
-            return NotFound();
-
-        var model = new SwapConfirmViewModel
+        public async Task<IActionResult> Confirm(int targetBookId, int offeredBookId)
         {
-            TargetBook = targetBook,
-            OfferedBook = offeredBook,
-            TargetBookOwnerId = targetBook.User?.Id,
-            OfferedBookOwnerId = offeredBook.User?.Id
-        };
+            var targetBook = await _db.Books.Include(b => b.User).FirstOrDefaultAsync(b => b.Id == targetBookId);
+            var offeredBook = await _db.Books.Include(b => b.User).FirstOrDefaultAsync(b => b.Id == offeredBookId);
 
-        return View(model);
-    }
+            if (targetBook == null || offeredBook == null)
+                return NotFound();
+
+            var model = new SwapConfirmViewModel
+            {
+                TargetBook = targetBook,
+                OfferedBook = offeredBook,
+                TargetBookOwnerId = targetBook.User?.Id,
+                OfferedBookOwnerId = offeredBook.User?.Id
+            };
+
+            return View(model);
+        }
+        
+
+
         [HttpPost]
-[ValidateAntiForgeryToken]
-public async Task<IActionResult> Create(int targetBookId, int offeredBookId)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(int targetBookId, int offeredBookId)
+        {
+            var targetBook = await _db.Books.FindAsync(targetBookId);
+            var offeredBook = await _db.Books.FindAsync(offeredBookId);
+
+            if (targetBook == null || offeredBook == null)
+            {
+                return NotFound();
+            }
+
+            var swapRequest = new SwapRequest
+            {
+                TargetBookId = targetBookId,
+                OfferedBookId = offeredBookId,
+                CreatedAt = DateTime.UtcNow,
+                Status = "Pending",
+                TargetBookOwnerId = targetBook.UserId,
+                OfferedBookOwnerId = offeredBook.UserId
+            };
+
+            _db.SwapRequests.Add(swapRequest);
+            await _db.SaveChangesAsync();
+
+            return RedirectToAction("Index", "Home");
+        }
+public IActionResult Decision(int id)
 {
-    var targetBook = await _db.Books.FindAsync(targetBookId);
-    var offeredBook = await _db.Books.FindAsync(offeredBookId);
+    var swap = _db.SwapRequests
+        .Include(s => s.OfferedBook).ThenInclude(b => b.User)
+        .Include(s => s.TargetBook).ThenInclude(b => b.User)
+        .FirstOrDefault(s => s.Id == id);
 
-    if (targetBook == null || offeredBook == null)
-    {
+    if (swap == null)
         return NotFound();
-    }
 
-    var swapRequest = new SwapRequest
+    var model = new SwapConfirmViewModel
     {
-        TargetBookId = targetBookId,
-        OfferedBookId = offeredBookId,
-        CreatedAt = DateTime.UtcNow,
-        Status = "Pending",
-        TargetBookOwnerId = targetBook.UserId,   // zakładam, że w Book masz UserId
-        OfferedBookOwnerId = offeredBook.UserId
+        OfferedBook = swap.OfferedBook,
+        TargetBook = swap.TargetBook
     };
 
-    _db.SwapRequests.Add(swapRequest);
-    await _db.SaveChangesAsync();
-
-    return RedirectToAction("Index", "Home");
+    ViewData["SwapId"] = swap.Id;
+    return View("SwapDecision", model);
 }
+
+
+[HttpPost]
+public IActionResult Accept(int id)
+{
+    var swap = _db.SwapRequests.FirstOrDefault(s => s.Id == id);
+    if (swap == null) return NotFound();
+
+    swap.Status = "Accepted";
+    _db.SaveChanges();
+
+    return RedirectToAction("Index");
+}
+
+[HttpPost]
+public IActionResult Decline(int id)
+{
+    var swap = _db.SwapRequests.FirstOrDefault(s => s.Id == id);
+    if (swap == null) return NotFound();
+
+    swap.Status = "Rejected";
+    _db.SaveChanges();
+
+    return RedirectToAction("Index");
+}
+
+
+
+
 
     }
     

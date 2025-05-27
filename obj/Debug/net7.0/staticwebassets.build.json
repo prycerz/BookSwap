@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "jkSzy4cEl9Ae9V3vQB4Uegnqql4+8vkc2CGJLHzyjfQ=",
+  "Hash": "/s/Ey7zPPNPJKl4d9oF9fa3IC0zMtGYVZis2ysyGB70=",
   "Source": "BookSwap",
   "BasePath": "_content/BookSwap",
   "Mode": "Default",
@@ -1122,23 +1122,6 @@
       "OriginalItemSpec": "wwwroot\\uploads\\24999978-05de-447f-812b-bed8a4a2e425.png"
     },
     {
-      "Identity": "C:\\Users\\pryce\\Desktop\\BookSwap\\wwwroot\\uploads\\47b4e662-7cec-4e20-8906-33e71f41231d.png",
-      "SourceId": "BookSwap",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\pryce\\Desktop\\BookSwap\\wwwroot\\",
-      "BasePath": "_content/BookSwap",
-      "RelativePath": "uploads/47b4e662-7cec-4e20-8906-33e71f41231d.png",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\uploads\\47b4e662-7cec-4e20-8906-33e71f41231d.png"
-    },
-    {
       "Identity": "C:\\Users\\pryce\\Desktop\\BookSwap\\wwwroot\\uploads\\64f6b929-f9a5-48ec-9863-813b9ba20835.jpeg",
       "SourceId": "BookSwap",
       "SourceType": "Discovered",
@@ -1171,6 +1154,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\7ee58d5c-9be4-4275-bf6b-979b35eb7b51.png"
+    },
+    {
+      "Identity": "C:\\Users\\pryce\\Desktop\\BookSwap\\wwwroot\\uploads\\9ee0782b-046f-44b8-adc9-d3345f478995.png",
+      "SourceId": "BookSwap",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pryce\\Desktop\\BookSwap\\wwwroot\\",
+      "BasePath": "_content/BookSwap",
+      "RelativePath": "uploads/9ee0782b-046f-44b8-adc9-d3345f478995.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\9ee0782b-046f-44b8-adc9-d3345f478995.png"
     },
     {
       "Identity": "C:\\Users\\pryce\\Desktop\\BookSwap\\wwwroot\\uploads\\bd48d2df-ea78-4ceb-ab6b-41d54b48dcf2.png",

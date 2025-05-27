@@ -47,9 +47,12 @@
 </td>
         <td>
             @if (swap.Status == "Pending")
-            {
-                <span class="badge bg-warning text-dark">Pending</span>
-            }
+{
+    <a asp-controller="SwapRequest" asp-action="Decision" asp-route-id="@swap.Id" class="badge bg-warning text-dark" style="text-decoration:none;">
+        Pending
+    </a>
+}
+
             else if (swap.Status == "Accepted")
             {
                 <span class="badge bg-success">Accepted</span>
