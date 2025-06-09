@@ -1,5 +1,6 @@
 @{
     ViewData["Title"] = "Register User";
+    var role = Context.Session.GetString("role");
 }
 
 <h2>Register New User</h2>
@@ -9,7 +10,10 @@
     <p><input name="password" type="password" placeholder="Password" required /></p>
     <p><button type="submit" class="btn btn-primary">Register</button></p>
 </form>
-
+@if (role != "Admin") 
+{
+    <a href="/Account/Login">Back to Login</a>
+}
 @if (ViewBag.Error != null)
 {
     <div class="alert alert-danger">@ViewBag.Error</div>

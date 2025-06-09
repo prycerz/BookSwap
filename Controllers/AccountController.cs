@@ -32,48 +32,42 @@ public class AccountController : Controller
         ViewBag.Error = "Invalid credentials";
         return View();
     }
+public IActionResult Register()
+{
+    return View(); // Każdy ma dostęp
+}
 
-    public IActionResult Register()
+
+
+ [HttpPost]
+public async Task<IActionResult> Register(string username, string password)
+{
+    if (await _db.Users.AnyAsync(u => u.Username == username))
     {
-        var role = HttpContext.Session.GetString("role");
-        if (role != "Admin")
-            return RedirectToAction("Login"); // albo inna strona np. AccessDenied
-
+        ViewBag.Error = "Username already taken";
         return View();
     }
 
-    [HttpPost]
-    public async Task<IActionResult> Register(string username, string password)
+    var user = new User
     {
-        var role = HttpContext.Session.GetString("role");
-        if (role != "Admin")
-            return RedirectToAction("Login");
+        Username = username,
+        PasswordHash = BCrypt.Net.BCrypt.HashPassword(password),
+        Role = "User" // lub nadawane dynamicznie
+    };
 
-        if (await _db.Users.AnyAsync(u => u.Username == username))
-        {
-            ViewBag.Error = "Username already taken";
-            return View();
-        }
+    _db.Users.Add(user);
 
-        var user = new User
-        {
-            Username = username,
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword(password),
-            Role = "User" // lub inna domyślna rola
-        };
+    var profile = new UserProfile
+    {
+        Username = username,
+    };
+    _db.UserProfiles.Add(profile);
 
-        _db.Users.Add(user);
+    await _db.SaveChangesAsync();
+    ViewBag.Message = "User successfully registered.";
+    return View();
+}
 
-        var profile = new UserProfile
-        {
-            Username = username,
-        };
-        _db.UserProfiles.Add(profile);
-
-        await _db.SaveChangesAsync();
-        ViewBag.Message = "User successfully registered.";
-        return View();
-    }
 
 
     public IActionResult ForgotPassword()
